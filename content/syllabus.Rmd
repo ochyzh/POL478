@@ -43,6 +43,6 @@ Students will have weekly homeworks (due at 10 am each Monday) that will require
 
 For each method covered we will run through applications in R during class. Students are strongly encouraged to follow along during class and review/run through these examples after class. Students will be provided with data, but may also use their own datasets.
 
-### Grading Scale
+### Grading Scale}
 Grades will be assigned based on performance on the homework assignments. The final grade will be calculated using the grading scale recommended by the Arts and Sciences (https://advice.writing.utoronto.ca/general/grading-policy/) from the sum of homework grades.
 
