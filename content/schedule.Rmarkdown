@@ -11,7 +11,7 @@ title: Course Schedule
         <th>Materials</th>
               </tr>
     </thead>
-    <tbody>
+    <tbody> 
       <tr>
         <td>Sep 14</td>
         <td>Introduction to R, RStudio, <br> 

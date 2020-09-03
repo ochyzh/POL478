@@ -25,7 +25,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/schedule/</guid>
-      <description>DateTopicMaterialsSep 14Introduction to R, RStudio, and RMarkdownCourse intro &amp; syllabus | R, RStudio, RMarkdown Sep 21Introduction to Data VisualizationIntro to R |Code in class Sep 28Visualization of Categorical Data graphics in R |Code in class Oct 5Introduction to Data Management intro to tidyverse |Code in class  Oct 19Advanced Data Management reshaping data |Code in class Oct 26Loops and Functions loops and functions |Code in class Nov 2Advanced Data Visualization more graphs |Code in class Nov 16Working with Dates and Time dates and time |Code in class  Nov 23Visualizing Network Data network data |Code in class  Nov 30Automated Data Collection web scraping |Code in class  Dec 7Drawing Maps drawing maps |Code in class  </description>
+      <description>DateTopicMaterials Sep 14Introduction to R, RStudio, and RMarkdownCourse intro &amp; syllabus | R, RStudio, RMarkdown Sep 21Introduction to Data VisualizationIntro to R |Code in class Sep 28Visualization of Categorical Data graphics in R |Code in class Oct 5Introduction to Data Management intro to tidyverse |Code in class  Oct 19Advanced Data Management reshaping data |Code in class Oct 26Loops and Functions loops and functions |Code in class Nov 2Advanced Data Visualization more graphs |Code in class Nov 16Working with Dates and Time dates and time |Code in class  Nov 23Visualizing Network Data network data |Code in class  Nov 30Automated Data Collection web scraping |Code in class  Dec 7Drawing Maps drawing maps |Code in class  </description>
     </item>
     
     <item>
@@ -34,156 +34,6 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/syllabus/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_backup_12020/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_backup_12020/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_backup_16116/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_backup_16116/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_backup_18544/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_backup_18544/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_backup_20472/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_backup_20472/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_backup_20656/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_backup_20656/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_local_12020/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_local_12020/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_local_16116/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_local_16116/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_local_18544/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_local_18544/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_local_20472/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_local_20472/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_local_20656/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_local_20656/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_remote_12020/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_remote_12020/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_remote_16116/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_remote_16116/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_remote_18544/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_remote_18544/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_remote_20472/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_remote_20472/</guid>
-      <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
-Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
-    </item>
-    
-    <item>
-      <title>POL 478H1 Syllabus, Fall 2020</title>
-      <link>/syllabus_remote_20656/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/syllabus_remote_20656/</guid>
       <description>Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent
 Lecture: Monday, 10am –12 pm, online–synchronousInstructor: Professor Olga Chyzh, olga fot chyzh at utoronto dot caOffice Hours: by appointment, https://chyzh.youcanbook.me/Overview and ObjectivesReal data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst.</description>
     </item>
