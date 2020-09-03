@@ -1,37 +1,6 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>POL 478H1 Syllabus, Fall 2020 | POL 478H1</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/fonts.css" />
-    
-  </head>
-
-  <body>
-    <nav>
-    <ul class="menu">
-      
-      <li><a href="/">Home</a></li>
-      
-      <li><a href="/schedule/">Schedule</a></li>
-      
-      <li><a href="/homework/">Homework</a></li>
-      
-      <li><a href="/syllabus/">Syllabus</a></li>
-      
-    </ul>
-    <hr/>
-    </nav>
-
-<div class="article-meta">
-<h1><span class="title">POL 478H1 Syllabus, Fall 2020</span></h1>
-
-
-</div>
-
-<main>
+---
+title: POL 478H1 Syllabus, Fall 2020 
+---
 
 
 
@@ -76,26 +45,11 @@
 <div id="coding-sessions" class="section level3">
 <h3>Coding Sessions</h3>
 <p>For each method covered we will run through applications in R during class. Students are strongly encouraged to follow along during class and review/run through these examples after class. Students will be provided with data, but may also use their own datasets.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+### Grading Scale
+=======
+### Grading Scale}
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 81f3cee6176a8324c626acd452e1a338d0f7577c
+Grades will be assigned based on performance on the homework assignments. The final grade will be calculated using the grading scale recommended by the Arts and Sciences (<a href="https://advice.writing.utoronto.ca/general/grading-policy/" class="uri">https://advice.writing.utoronto.ca/general/grading-policy/</a>) from the sum of homework grades.</p>
 </div>
-<div id="grading-scale" class="section level3">
-<h3>Grading Scale}</h3>
-<p>Grades will be assigned based on performance on the homework assignments. The final grade will be calculated using the grading scale recommended by the Arts and Sciences (<a href="https://advice.writing.utoronto.ca/general/grading-policy/" class="uri">https://advice.writing.utoronto.ca/general/grading-policy/</a>) from the sum of homework grades.</p>
 </div>
-</div>
-
-</main>
-
-  <footer>
-  <script src="//yihui.name/js/math-code.js"></script>
-<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-<script async src="//yihui.name/js/center-img.js"></script>
-
-  
-  <hr/>
-  © <a href="https://www.olgachyzh.com">Olga Chyzh</a> | <a href="https://github.com/ochyzh">Github</a> | <a href="https://twitter.com/olga_chyzh">Twitter</a>
-  
-  </footer>
-  </body>
-</html>
-

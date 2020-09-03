@@ -1,0 +1,48 @@
+---
+title: POL 478H1 Syllabus, Fall 2020 
+---
+
+**Prerequisites: POL232H1/POL242Y1/POL322H1/equivalent**
+
+## Lecture: Monday, 10am --12 pm, online--synchronous
+
+## Instructor:  Professor Olga Chyzh, olga fot chyzh at utoronto dot ca 
+## Office Hours:  by appointment, https://chyzh.youcanbook.me/
+
+
+### Overview and Objectives
+
+Real data, such as election results, location and type of terrorist attacks, or international trade flows, rarely come in nice, convenient to manage spreadsheets. Most data are not stored in spreadsheets at all. The task of collecting and cleaning the data is frequently upon the data analyst. Time-consuming and challenging as it is, this task need not be tedious and frustrating.
+
+This course introduces students to the fundamental computational tools for cleaning, managing,n storing, analyzing, and presenting political data. The material will enable students to become proficient enough to actively implement the methods and tools in their own research.
+
+
+### Learning Outcomes 
+This course is designed as a series of weekly modules that build upon each other. Each module covers one or more state-of-the-art approaches to statistical analysis of network data. For each model covered, the objectives are that students will:
+
+- Learn how to deal with complex, messy, real data
+- Use graphics to explore, understand, and present data
+- Gain familiarity with basic data collection, storage and management
+- Reshape data into the most convenient form for analysis or reporting
+- Automate cleaning and analysis in R.
+
+
+### Software
+[R](https://www.r-project.org/)
+[RStudio](https://rstudio.com/products/rstudio/download/)
+
+### Reading
+
+The textbook that I recommend (but do not require) for the class is "ggplot2: Elegant Graphics for Data Analysis" by Hadley Wickham.
+
+### Homework
+
+Students will have weekly homeworks (due at 10 am each Monday) that will require applying the methods covered that week to a dataset made available by the instructor. Each student will submit their homework as an .Rmd and an .html file. Each homework will take 1--3 hours to complete. 
+
+### Coding Sessions
+
+For each method covered we will run through applications in R during class. Students are strongly encouraged to follow along during class and review/run through these examples after class. Students will be provided with data, but may also use their own datasets.
+
+### Grading Scale}
+Grades will be assigned based on performance on the homework assignments. The final grade will be calculated using the grading scale recommended by the Arts and Sciences (https://advice.writing.utoronto.ca/general/grading-policy/) from the sum of homework grades.
+
