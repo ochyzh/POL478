@@ -1,9 +1,9 @@
 baseurl = "/"
+disqusShortname = ""
+googleAnalytics = "UA-177408185-1"
 languageCode = "en-us"
 title = "POL 478H1"
 theme = "hugo-xmin"
-googleAnalytics = "UA-177408185-1"
-disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 footnotereturnlinkcontents = "↩"
 
