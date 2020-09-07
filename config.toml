@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://pol478.netlify.app/"
 disqusShortname = ""
 googleAnalytics = "UA-177408185-1"
 languageCode = "en-us"
