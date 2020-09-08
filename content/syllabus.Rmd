@@ -37,7 +37,7 @@ The textbook that I recommend (but do not require) for the class is "ggplot2: El
 
 ### Homework
 
-Students will have weekly homeworks (due at 10 am each Monday) that will require applying the methods covered that week to a dataset made available by the instructor. Each student will submit their homework as an .Rmd and an .html file. Each homework will take 1--3 hours to complete. 
+Students will have weekly homeworks (due at 10 am each Monday) that will require applying the methods covered that week to a dataset made available by the instructor. Each student will submit their homework as an .Rmd and an .html file. Each homework will take 1--3 hours to complete. Late submissions will **not** be accepted (to allow the instructor to share the solutions in a timely manner). Students who missed a homework should contact the instructor as soon as possible to discuss their situation. 
 
 ### Coding Sessions
 
