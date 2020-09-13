@@ -18,7 +18,7 @@ title: Course Schedule
          and RMarkdown</td>
         <td>
           <dl>
-          <dd><a href="../materials/01_introduction.pdf" target=_blank>Course intro & syllabus</a> | <a href="../materials/02_intro_R.html" target=_blank>R, RStudio, RMarkdown</a> |<a href="03_more_R.html"target=_blank> More R </a>
+          <dd><a href="../materials/01_introduction.pdf" target=_blank>Course intro & syllabus</a> | <a href="../materials/02_intro_R.html" target=_blank>R, RStudio, RMarkdown</a> |<a href="../materials/03_more_R.html"target=_blank> More R </a>
           </dd>
           </dl>
         </td>
