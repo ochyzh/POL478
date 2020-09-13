@@ -2,7 +2,7 @@
 title: Homework Assignments
 ---
 <p>
-Homework assignments are made available at the end of class and are due the following week by the end of the day.
+Homework assignments are made available at the end of class and are due the following week by the beginning of class.
 </p>
 <div>
   <table class="table table-striped table-hover"> 

@@ -1,13 +1,7 @@
 ---
-title: 'Network Analysis II - Homework #1'
+title: 'POL 478 - Homework #1'
 author: "Your Name"
-date: "7/22/2020"
-output: html_document
----
----
-title: 'Network Analysis II - Homework #1'
-author: "Your Name"
-date: "7/22/2020"
+date: " "
 output: html_document
 ---
 
@@ -17,49 +11,45 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Make sure to replace "Your Name" in the YAML (top of this script) with your name.
 
-## Friendship networks
+## Data on Global Terrorist Attacks
 
-2. Run the code in the chunk below to load the `coleman` friendship data from the `sna` package. You can run this code by pressing the green arrow in the top right corner of the chunk. If the code gives you an error, make sure that you installed the package `sna`.
-
-```{r}
-library(sna)
-data(coleman)
-```
-
-3. Run the next chunk to plot the friendship network using the `igraph` package.
+2. Run the chunk below to load the package `classdata` and two datasets: `terr_attacks` and `terr_attacks.wide`. You can do so by pressing the green arrow in the top right corner of the chunk. If the code gives you an error, make sure that you installed the package `classdata` (see notes from class).
 
 ```{r}
-library(igraph)
-frMat<-graph_from_adjacency_matrix(coleman[1,,], mode="directed",diag=FALSE )
-frMat <- igraph::delete.vertices(frMat , which(igraph::degree(frMat)==0))
-V(frMat)$label<-NA
-plot(frMat, edge.arrow.size=.2)
+library(classdata)
+data(terr_attacks)
+data(terr_attacks.wide)
 ```
 
-4. In the empty code chunk below, type in the commands to calculate betweenness centrality for all nodes and plot the network so that node size is proportional to its degree (multiply betweenness by .1 to make the graph readable). Reduce edge arrow size to 0.2.
+3. Explore the two datasets. Type all the commands you use in the chunk below. 
 
 ```{r}
 #Type code below:
-bDeg<-igraph::betweenness(frMat)
-plot(frMat, vertex.size=.1*bDeg, edge.arrow.size=.2)
 
 ```
 
-5. Just eye-balling, how many clusters do you see in this network?  [Type your answer here].
+4. These datasets contain the same data stored in different ways.  What information is stored in the rows and columns of each version of the data?  In other words, explain as clearly as you can, how the two versions of the data differ. [Type your answer here.]
 
-6. In the empty code chunk below, type in the commands to partition this network using the `cluster_edge_betweenness` algorithm. Plot the communities.
+
+5. Load the library `ggplot2` and plot the number of assassinations against the number of hostage taking (kidnapping) first using a regular scale, then using a logged scale (for this, use the wide version of the data).  Make sure to label your axes nicely. 
 
 ```{r}
 #Type code below:
-ceb<-cluster_edge_betweenness(frMat)
-plot(ceb, frMat)
+
 
 ```
 
-7. How many clusters did the algorithm identify? [Type your answer here].
+6. Color the observations based on whether the country is a democracy.  Vary the size by gdp/capita.  (Follow the class example).
+
+```{r}
+#Type code below:
 
 
-8. Knit the RMarkdown file (press the "Knit" button above) and read through the corresponding html file.  
+```
+
+7. Describe the resulting scatterplot using the example from class as your model. 
+
+8. Knit the RMarkdown file (press the “Knit” button above) and read through the corresponding html file.
 
 Note: 
 
