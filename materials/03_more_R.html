@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>POL 478H1 F</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olga Chyzh [www.olgachyzh.com]" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# POL 478H1 F
+## Intro to R
+### Olga Chyzh [www.olgachyzh.com]
+
+---
+
+
+
+
+
+## Outline
+
+- Input data
+
+- Look at data
+
+- Extract pieces
+
+- Basic graphing in `ggplot2`
+
+---
+## Course Data
+
+- Many commands/features in R are a part of a specific package.
+
+- You must install and load the package in order to use these commands/features.
+
+- We have an R package for this class. To install/update, copy and paste the following code into your RStudio source editor and run.
+
+
+```r
+library(devtools)
+devtools::install_github("ochyzh/classdata")
+```
+
+- To load the package (at the beginning of each R session if you plan to use it):
+
+
+```r
+library(classdata)
+```
+
+---
+#Getting Help Within R
+
+If you want to learn about a specific command:
+
+```r
+?command
+
+help("command")
+
+help.search("command")
+
+??command
+```
+
+
+---
+
+## R Reference Card
+
+- http://cran.r-project.org/doc/contrib/Short-refcard.pdf
+
+- Save/print it to reference as you work.
+
+---
+
+## Your Turn (5 min)
+
+- Install the package `classdata` on your computer
+
+- Load the package into your current R session:
+
+
+```r
+library(classdata)
+```
+
+- Look at the R help for the dataset  `terr_attacks`
+
+- What happens if you just type in the name of the dataset?
+
+---
+## Exploring Objects
+
+For any R object `x`, we can use any of the following:
+
+- `x`
+
+- `head(x)`
+
+- `summary(x)`
+
+- `str(x)`
+
+- `dim(x)`
+
+Try these commands on the `terr_attacks` data.
+
+---
+## `str` is for *structure*
+
+
+```r
+data(terr_attacks)
+str(terr_attacks)
+```
+
+```
+## 'data.frame':	16120 obs. of  10 variables:
+##  $ country    : chr  "Afghanistan" "Albania" "Algeria" "Angola" ...
+##  $ ccode      : num  700 339 615 540 160 371 900 305 373 692 ...
+##  $ cabb       : chr  "AFG" "ALB" "DZA" "AGO" ...
+##  $ year       : int  2001 2001 2001 2001 2001 2001 2001 2001 2001 2001 ...
+##  $ type       : chr  "Armed Assault" "Armed Assault" "Armed Assault" "Armed Assault" ...
+##  $ num_attacks: num  2 0 80 22 0 0 0 0 2 0 ...
+##  $ GDPpc      : num  NA 2454 3617 2214 7776 ...
+##  $ population : num  20531160 3060173 31590320 15562791 37471535 ...
+##  $ tradeofgdp : num  NA 57.4 58.7 150.3 21.9 ...
+##  $ polity2    : int  NA 5 -3 -3 8 5 10 10 -7 -8 ...
+```
+
+---
+## Extract Parts of an Object
+
+- `x$variable`
+
+- `x[,"variable"]`
+
+- `x[rows, columns]`
+
+- `x$variable[rows]`
+
+`rows` and `columns` are vectors or indices.
+
+Try these commands on the `terr_attacks` data.
+
+---
+## Your Turn
+
+- Look at the first 10 rows of the `terr_attacks` data
+
+- Why are some values coded as `NA`? Look at the help for `NA`.
+
+
+---
+## Asking Questions about the Data
+
+Make a list of questions you think you can answer by analyzing these data. Write down as many as you can. 
+
+---
+
+## Possible Answers
+
+- Look at the distribution of a single variable (*bar graph* or *histogram*)
+
+- Look at the relationship between two variables (*scatterplot*, *box plot*, *tile plot*)
+
+- Look how the relationship between two variables is conditional on other variables (*facetting*, *color*, etc.)
+
+---
+
+## Load the Data on Global Terrorist Attacks
+
+```r
+library(classdata)
+data("terr_attacks.wide")
+str(terr_attacks.wide)
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	2015 obs. of  16 variables:
+##  $ country                            : chr  "Afghanistan" "Albania" "Algeria" "Angola" ...
+##  $ ccode                              : num  700 339 615 540 160 371 900 305 373 692 ...
+##  $ cabb                               : chr  "AFG" "ALB" "DZA" "AGO" ...
+##  $ year                               : int  2001 2001 2001 2001 2001 2001 2001 2001 2001 2001 ...
+##  $ GDPpc                              : num  NA 2454 3617 2214 7776 ...
+##  $ population                         : num  20531160 3060173 31590320 15562791 37471535 ...
+##  $ tradeofgdp                         : num  NA 57.4 58.7 150.3 21.9 ...
+##  $ polity2                            : int  NA 5 -3 -3 8 5 10 10 -7 -8 ...
+##  $ Armed Assault                      : num  2 0 80 22 0 0 0 0 2 0 ...
+##  $ Bombing/Explosion                  : num  10 1 17 5 2 0 0 0 1 0 ...
+##  $ Facility/Infrastructure Attack     : num  2 0 2 5 0 0 1 0 1 0 ...
+##  $ Assassination                      : num  0 0 4 0 0 2 0 0 0 0 ...
+##  $ Hostage Taking (Kidnapping)        : num  0 0 3 3 0 0 0 0 0 0 ...
+##  $ Unarmed Assault                    : num  0 0 0 0 0 0 1 0 0 0 ...
+##  $ Hijacking                          : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Hostage Taking (Barricade Incident): num  0 0 0 0 0 0 0 0 0 0 ...
+```
+
+---
+## `ggplot2`: Grammar of Graphics
+
+A plot consists of:
+
+1. **mappings** `(aes)`: variables that are mapped to graphical elements
+
+2. **layers:** graphical elements (`geoms` such as points, lines, rectangles, text, etc.) and statistical transformations (`stats` such as identity, counts, bins, etc.)
+
+3. **scales:** map values in the data space to values in the aesthetic space (color, size, shape, position)
+
+4. **coordinate system** `(coord)`: Cartesian, but can be others
+
+5. **facetting:** subsetting and arranging data
+
+6. **theme:** fine-tuning the result, e.g. font, background, margins
+---
+## Scatterplot
+
+- Need two continuous variables
+
+- `aes`: what variables are you mapping? Scatterplots need a mapping for `x` and a mapping for `y`.
+
+
+```r
+library(ggplot2)
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`, y=`Bombing/Explosion`))+geom_point()
+ggplot(data=terr_attacks.wide, aes(x=log(`Armed Assault`+1), y=log(`Bombing/Explosion`+1)))+geom_point()
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion")
+```
+
+---
+## Interpreting Scatterplots
+
+- General patterns
+  - Form and direction
+  - Strength 
+
+- Localized patterns
+
+- Deviations from the pattern
+  - Outliers
+  
+---
+
+&lt;img src="./pop_exp.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+&gt; 1. &lt;font color="darkorange"&gt;Form: Roughly linear, several distinct groups&lt;/font&gt;
+&gt; 2. &lt;font color="darkorange"&gt;Strength: pretty strong.  Data points form a line.
+&lt;/font&gt;
+&gt; 3. &lt;font color="darkorange"&gt;Direction: Positively Associated.
+&lt;/font&gt;
+&gt; 4. &lt;font color="darkorange"&gt;Outliers: AK, DC, NY, CA.&lt;/font&gt;
+
+---
+  
+
+
+
+```r
+terr_attacks.wide$dem&lt;-"Aut"
+terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
+```
+
+&lt;img src="03_more_R_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
