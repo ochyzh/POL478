@@ -1,6 +1,9 @@
 ---
 title: Course Schedule
 ---
+<p>
+All the class materials will be posted/updated here.
+</p>
 
 <div>
   <table class="table table-striped table-hover">
