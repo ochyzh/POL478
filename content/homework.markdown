@@ -17,7 +17,7 @@ Homework assignments are made available at the end of class and are due the foll
         <td>Sep 21</td>
         <td>
           <dl>
-          <dd><a href="../homeworks/homework01_alt.Rmd" target=_blank>Homework 1</a> 
+          <dd><a href="../materials/homeworks/homework01_alt.Rmd" target=_blank>Homework 1</a> 
           </dd>
           </dl>
         </td>

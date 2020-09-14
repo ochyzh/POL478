@@ -1,0 +1,57 @@
+---
+title: "myfirstmarkdown"
+author: "Olga Chyzh"
+date: "9/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+With RMarkdown, you can ...
+
+1. make ordered lists
+2. *Type text*
+3. **bold**
+4. `or verbatim`
+5. you can ~~do this~~
+6. make a $_{subscript}$ or a ^superscript^
+
+
+
+
+```{r}
+rm(list=ls())
+#install.packages("devtools")
+library(devtools)
+devtools::install_github("ochyzh/classdata")
+library(classdata)
+?terr_attacks
+data(terr_attacks)
+terr_attacks
+head(terr_attacks)
+summary(terr_attacks)
+str(terr_attacks)
+dim(terr_attacks)
+
+terr_attacks$num_attacks
+terr_attacks[,"num_attacks"]
+
+terr_attacks[1,"num_attacks"]
+terr_attacks[1:10,6]
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
