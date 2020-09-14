@@ -21,7 +21,7 @@ All the class materials will be posted/updated here.
          and RMarkdown</td>
         <td>
           <dl>
-          <dd><a href="../materials/01_introduction.pdf" target=_blank>Course intro & syllabus</a> | <a href="../materials/02_intro_R.html" target=_blank>R, RStudio, RMarkdown</a> |<a href="../materials/03_more_R.html"target=_blank> More R </a>
+          <dd><a href="../materials/01_introduction.pdf" target=_blank>Course intro & syllabus</a> | <a href="../materials/02_intro_R.html" target=_blank>R, RStudio, RMarkdown</a> |<a href="../materials/03_more_R.html"target=_blank> More R </a>|<a href="../materials/scripts/myfirstmarkdown.Rmd"target=_blank> Code in class </a>
           </dd>
           </dl>
         </td>

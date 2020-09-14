@@ -1,0 +1,57 @@
+---
+title: 'POL 478 - Homework #1'
+author: "Your Name"
+date: " "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Make sure to replace "Your Name" in the YAML (top of this script) with your name.
+
+## Data on Global Terrorist Attacks
+
+2. Run the chunk below to load the package `classdata` and two datasets: `terr_attacks` and `terr_attacks.wide`. You can do so by pressing the green arrow in the top right corner of the chunk. If the code gives you an error, make sure that you installed the package `classdata` (see notes from class).
+
+```{r}
+library(classdata)
+data(terr_attacks)
+data(terr_attacks.wide)
+```
+
+3. Explore the two datasets. Type all the commands you use in the chunk below. 
+
+```{r}
+#Type code below:
+
+```
+
+4. These datasets contain the same data stored in different ways.  What information is stored in the rows and columns of each version of the data?  In other words, explain as clearly as you can, how the two versions of the data differ. [Type your answer here.]
+
+
+5. In the chunk below, type the code to look at the first ten rows and the first 10 columns on the dataset `terr_attacks`. 
+
+```{r}
+#Type code below:
+
+
+```
+
+6. In the chunk below, summarize just the variable `num_attacks` of the dataset `terr_attacks`.
+
+```{r}
+#Type code below:
+
+
+```
+
+7. Knit the RMarkdown file (press the “Knit” button above) and read through the corresponding html file.
+
+Note: 
+
+This homework is supposed to be mainly a code reading exercise. You should not have to program extensively. Instead, you have to figure out which pieces you need to copy and adjust. 
+
+
+For the submission: submit your solution in an R Markdown file and (just for insurance) submit the corresponding html file with it. 
