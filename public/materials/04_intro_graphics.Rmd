@@ -1,6 +1,6 @@
 ---
 title: POL 478H1 F
-subtitle: Intro to R
+subtitle: Intro to Graphics
 author: "Olga Chyzh [www.olgachyzh.com]"
 output:
   xaringan::moon_reader:
@@ -26,129 +26,54 @@ knitr::opts_chunk$set(
 
 ```
 
+## Bad Visualizations
 
 
-## Outline
-
-- Input data
-
-- Look at data
-
-- Extract pieces
-
-- Basic graphing in `ggplot2`
-
----
-## Course Data
-
-- Many commands/features in R are a part of a specific package.
-
-- You must install and load the package in order to use these commands/features.
-
-- We have an R package for this class. To install/update, copy and paste the following code into your RStudio source editor and run.
-
-```{r}
-library(devtools)
-devtools::install_github("ochyzh/classdata")
-```
-
-- To load the package (at the beginning of each R session if you plan to use it):
-
-```{r}
-library(classdata)
+```{r, echo=F, out.width= "1400px",fig.align="center"}
+knitr::include_graphics("nbc.jpg")
 ```
 
 ---
-#Getting Help Within R
 
-If you want to learn about a specific command:
-```{r, eval=F}
-?command
-
-help("command")
-
-help.search("command")
-
-??command
-```
+## Bad Visualizations
 
 
----
-
-## R Reference Card
-
-- http://cran.r-project.org/doc/contrib/Short-refcard.pdf
-
-- Save/print it to reference as you work.
-
----
-
-## Your Turn (5 min)
-
-- Install the package `classdata` on your computer
-
-- Load the package into your current R session:
-
-```{r}
-library(classdata)
-```
-
-- Look at the R help for the dataset  `terr_attacks`
-
-- What happens if you just type in the name of the dataset?
-
----
-## Exploring Objects
-
-For any R object `x`, we can use any of the following:
-
-- `x`
-
-- `head(x)`
-
-- `summary(x)`
-
-- `str(x)`
-
-- `dim(x)`
-
-Try these commands on the `terr_attacks` data.
-
----
-## `str` is for *structure*
-
-```{r}
-data(terr_attacks)
-str(terr_attacks)
+```{r, echo=F, out.width= "1400px",fig.align="center"}
+knitr::include_graphics("nickcage.jpeg")
 ```
 
 ---
-## Extract Parts of an Object
 
-- `x$variable`
+## Bad Visualizations
 
-- `x[,"variable"]`
+### Younger adults are large percentage of coronavirus hospitalizations in United States, according to new CDC data
 
-- `x[rows, columns]`
+```{r, echo=F, out.width= "900px",fig.align="center"}
+knitr::include_graphics("wapo.png")
+```
 
-- `x$variable[rows]`
+Source: [The Washington Post](https://www.washingtonpost.com/health/2020/03/19/younger-adults-are-large-percentage-coronavirus-hospitalizations-united-states-according-new-cdc-data/)
+---
 
-`rows` and `columns` are vectors or indices.
+## Bad Visualizations
 
-Try these commands on the `terr_attacks` data.
+```{r, echo=F, out.width= "500px",fig.align="center"}
+knitr::include_graphics("ribbons.png")
+```
+
+Source: Roeder K (1994) DNA fingerprinting: A review of the controversy (with discussion). Statistical Science 9:222-278, Figure 4
 
 ---
-## Your Turn
 
-- Look at the first 10 rows of the `terr_attacks` data
+## Want More?
 
-- Why are some values coded as `NA`? Look at the help for `NA`.
-
+[Visit Karl Broman's Website](https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/)
 
 ---
+
 ## Asking Questions about the Data
 
-Make a list of questions you think you can answer by analyzing these data. Write down as many as you can. 
+Make a list of questions you think you can answer by analyzing the data on terrorist attacks. Write down as many as you can. 
 
 ---
 
@@ -226,20 +151,80 @@ knitr::include_graphics("./pop_exp.png")
 > 4. <font color="darkorange">Outliers: AK, DC, NY, CA.</font>
 
 ---
-  
+
+## Looking at Conditional Relationships
+
+- Can use color, size, shape, etc. to show additional information
+
+- E.g., can color observations based on regime type. (Why?)
+
+  - Data Management Tool \#1: Recoding
 
 
 ```{r, eval=F}
 terr_attacks.wide$dem<-"Aut"
 terr_attacks.wide$dem[terr_attacks.wide$polity2>7]<-"Dem"
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
 ```
 
-```{r, echo=F, out.width= "350px"}
+---
+## Color by Regime Type
+
+```{r, echo=T, out.width= "350px"}
 library(ggplot2)
 terr_attacks.wide$dem<-"Aut"
 terr_attacks.wide$dem[terr_attacks.wide$polity2>7]<-"Dem"
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
+
+```
+
+
+---
+
+## Facetting
+
+Can facet to display plots of subsets of data: `facet_wrap`, `facet_grid`
+
+- E.g., can facet by region, year, etc.
+
+---
+
+## More Recoding 
+
+- Code the `region` variable from `ccode`.
+
+```{r}
+terr_attacks.wide$region<-NA
+terr_attacks.wide$region[terr_attacks.wide$ccode<200]<- "The Americas"
+terr_attacks.wide$region[terr_attacks.wide$ccode>=200 & terr_attacks.wide$ccode<401]<- "Europe"
+
+```
+
+---
+## Your Turn
+
+Code the rest of the values of `region` using the following coding scheme:
+
+
+| ccode  | region |
+| ------------- | ------------- |
+| 401--627  | Africa  |
+| 628--699  | Middle East  |
+| 700--899  | Asia  |
+| $\geq$ 900  | Australia and Oceania  |
+
+```{r, echo=F}
+terr_attacks.wide$region[terr_attacks.wide$ccode>=401 & terr_attacks.wide$ccode<627]<- "Africa"
+terr_attacks.wide$region[terr_attacks.wide$ccode>=628 & terr_attacks.wide$ccode<699]<- "Middle East"
+terr_attacks.wide$region[terr_attacks.wide$ccode>=700 & terr_attacks.wide$ccode<899]<- "Asia"
+terr_attacks.wide$region[terr_attacks.wide$ccode>=900]<- "Australia and Oceania"
+
+
+
+```
+---
+
+## Facet by Region
+```{r, out.width= "350px"}
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,colour=dem,size=GDPpc))+facet_wrap(~region)+geom_point()+scale_y_log10("Bombing/Explosion")+scale_x_log10("Armed Assault")
 ```
 

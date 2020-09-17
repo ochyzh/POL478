@@ -31,7 +31,7 @@ All the class materials will be posted/updated here.
         <td>Introduction to Data Visualization</td>
         <td>
           <dl>
-          <dd><a href="../materials/02_r-intro.html" target=_blank>Intro to R</a>|<a href="code/stat478-sep-14.R"target=_blank> Code in class </a>
+          <dd><a href="../materials/04_intro_graphics.html" target=_blank>Intro to Graphics</a>|<a href="code/stat478-sep-14.R"target=_blank> Code in class </a>
           </dd>
           </dl>
         </td>

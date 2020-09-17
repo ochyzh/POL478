@@ -12,155 +12,53 @@
 class: center, middle, inverse, title-slide
 
 # POL 478H1 F
-## Intro to R
+## Intro to Graphics
 ### Olga Chyzh [www.olgachyzh.com]
 
 ---
 
 
 
+## Bad Visualizations
 
 
-## Outline
-
-- Input data
-
-- Look at data
-
-- Extract pieces
-
-- Basic graphing in `ggplot2`
-
----
-## Course Data
-
-- Many commands/features in R are a part of a specific package.
-
-- You must install and load the package in order to use these commands/features.
-
-- We have an R package for this class. To install/update, copy and paste the following code into your RStudio source editor and run.
-
-
-```r
-library(devtools)
-devtools::install_github("ochyzh/classdata")
-```
-
-- To load the package (at the beginning of each R session if you plan to use it):
-
-
-```r
-library(classdata)
-```
-
----
-#Getting Help Within R
-
-If you want to learn about a specific command:
-
-```r
-?command
-
-help("command")
-
-help.search("command")
-
-??command
-```
-
+&lt;img src="nbc.jpg" width="1400px" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## R Reference Card
+## Bad Visualizations
 
-- http://cran.r-project.org/doc/contrib/Short-refcard.pdf
 
-- Save/print it to reference as you work.
+&lt;img src="nickcage.jpeg" width="1400px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Bad Visualizations
+
+### Younger adults are large percentage of coronavirus hospitalizations in United States, according to new CDC data
+
+&lt;img src="wapo.png" width="900px" style="display: block; margin: auto;" /&gt;
+
+Source: [The Washington Post](https://www.washingtonpost.com/health/2020/03/19/younger-adults-are-large-percentage-coronavirus-hospitalizations-united-states-according-new-cdc-data/)
+---
+
+## Bad Visualizations
+
+&lt;img src="ribbons.png" width="500px" style="display: block; margin: auto;" /&gt;
+
+Source: Roeder K (1994) DNA fingerprinting: A review of the controversy (with discussion). Statistical Science 9:222-278, Figure 4
 
 ---
 
-## Your Turn (5 min)
+## Want More?
 
-- Install the package `classdata` on your computer
-
-- Load the package into your current R session:
-
-
-```r
-library(classdata)
-```
-
-- Look at the R help for the dataset  `terr_attacks`
-
-- What happens if you just type in the name of the dataset?
+[Visit Karl Broman's Website](https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/)
 
 ---
-## Exploring Objects
 
-For any R object `x`, we can use any of the following:
-
-- `x`
-
-- `head(x)`
-
-- `summary(x)`
-
-- `str(x)`
-
-- `dim(x)`
-
-Try these commands on the `terr_attacks` data.
-
----
-## `str` is for *structure*
-
-
-```r
-data(terr_attacks)
-str(terr_attacks)
-```
-
-```
-## 'data.frame':	16120 obs. of  10 variables:
-##  $ country    : chr  "Afghanistan" "Albania" "Algeria" "Angola" ...
-##  $ ccode      : num  700 339 615 540 160 371 900 305 373 692 ...
-##  $ cabb       : chr  "AFG" "ALB" "DZA" "AGO" ...
-##  $ year       : int  2001 2001 2001 2001 2001 2001 2001 2001 2001 2001 ...
-##  $ type       : chr  "Armed Assault" "Armed Assault" "Armed Assault" "Armed Assault" ...
-##  $ num_attacks: num  2 0 80 22 0 0 0 0 2 0 ...
-##  $ GDPpc      : num  NA 2454 3617 2214 7776 ...
-##  $ population : num  20531160 3060173 31590320 15562791 37471535 ...
-##  $ tradeofgdp : num  NA 57.4 58.7 150.3 21.9 ...
-##  $ polity2    : int  NA 5 -3 -3 8 5 10 10 -7 -8 ...
-```
-
----
-## Extract Parts of an Object
-
-- `x$variable`
-
-- `x[,"variable"]`
-
-- `x[rows, columns]`
-
-- `x$variable[rows]`
-
-`rows` and `columns` are vectors or indices.
-
-Try these commands on the `terr_attacks` data.
-
----
-## Your Turn
-
-- Look at the first 10 rows of the `terr_attacks` data
-
-- Why are some values coded as `NA`? Look at the help for `NA`.
-
-
----
 ## Asking Questions about the Data
 
-Make a list of questions you think you can answer by analyzing these data. Write down as many as you can. 
+Make a list of questions you think you can answer by analyzing the data on terrorist attacks. Write down as many as you can. 
 
 ---
 
@@ -257,18 +155,80 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1)
 &gt; 4. &lt;font color="darkorange"&gt;Outliers: AK, DC, NY, CA.&lt;/font&gt;
 
 ---
-  
+
+## Looking at Conditional Relationships
+
+- Can use color, size, shape, etc. to show additional information
+
+- E.g., can color observations based on regime type. (Why?)
+
+  - Data Management Tool \#1: Recoding
 
 
 
 ```r
 terr_attacks.wide$dem&lt;-"Aut"
 terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
+```
+
+---
+## Color by Regime Type
+
+
+```r
+library(ggplot2)
+terr_attacks.wide$dem&lt;-"Aut"
+terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
 ```
 
-&lt;img src="03_more_R_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-9-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Facetting
+
+Can facet to display plots of subsets of data: `facet_wrap`, `facet_grid`
+
+- E.g., can facet by region, year, etc.
+
+---
+
+## More Recoding 
+
+- Code the `region` variable from `ccode`.
+
+
+```r
+terr_attacks.wide$region&lt;-NA
+terr_attacks.wide$region[terr_attacks.wide$ccode&lt;200]&lt;- "The Americas"
+terr_attacks.wide$region[terr_attacks.wide$ccode&gt;=200 &amp; terr_attacks.wide$ccode&lt;401]&lt;- "Europe"
+```
+
+---
+## Your Turn
+
+Code the rest of the values of `region` using the following coding scheme:
+
+
+| ccode  | region |
+| ------------- | ------------- |
+| 401--627  | Africa  |
+| 628--699  | Middle East  |
+| 700--899  | Asia  |
+| `\(\geq\)` 900  | Australia and Oceania  |
+
+
+---
+
+## Facet by Region
+
+```r
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,colour=dem,size=GDPpc))+facet_wrap(~region)+geom_point()+scale_y_log10("Bombing/Explosion")+scale_x_log10("Armed Assault")
+```
+
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-12-1.png" width="350px" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
