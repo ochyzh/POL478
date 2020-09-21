@@ -44,7 +44,7 @@ Source: [The Washington Post](https://www.washingtonpost.com/health/2020/03/19/y
 
 ## Bad Visualizations
 
-&lt;img src="ribbons.png" width="500px" style="display: block; margin: auto;" /&gt;
+&lt;img src="ribbons.png" width="400px" style="display: block; margin: auto;" /&gt;
 
 Source: Roeder K (1994) DNA fingerprinting: A review of the controversy (with discussion). Statistical Science 9:222-278, Figure 4
 
@@ -56,23 +56,54 @@ Source: Roeder K (1994) DNA fingerprinting: A review of the controversy (with di
 
 ---
 
+## Thoughtful Visualization
+
+- Start with a thoughtful question about your data.
+
+- Think of several alternative ways to show the same relationship (e.g., vary plot type, color, size, facetting, etc.)
+
+- Motivate every option in function
+
+- Prioritize reader-friendliness (e.g., are you using color-blind friendly colors?)
+
+- Attention to detail (titles, labels, axes, ticks, grids, etc.)
+
+---
+
 ## Asking Questions about the Data
 
 Make a list of questions you think you can answer by analyzing the data on terrorist attacks. Write down as many as you can. 
 
 ---
 
-## Possible Answers
+## Example 1: 
 
-- Look at the distribution of a single variable (*bar graph* or *histogram*)
+What is the relationship between armed assaults and bombings? Are they complements or substitutes? 
 
-- Look at the relationship between two variables (*scatterplot*, *box plot*, *tile plot*)
-
-- Look how the relationship between two variables is conditional on other variables (*facetting*, *color*, etc.)
+- two continuous variables--&gt; a scatterplot
 
 ---
 
-## Load the Data on Global Terrorist Attacks
+## `ggplot2`: Grammar of Graphics
+
+A plot consists of:
+
+1. **mappings** `(aes)`: variables that are mapped to graphical elements
+
+2. **layers:** graphical elements (`geoms` such as points, lines, rectangles, text, etc.) and statistical transformations (`stats` such as identity, counts, bins, etc.)
+
+3. **scales:** map values in the data space to values in the aesthetic space (color, size, shape, position)
+
+4. **coordinate system** `(coord)`: Cartesian, but can be others
+
+5. **facetting:** subsetting and arranging data
+
+6. **theme:** fine-tuning the result, e.g. font, background, margins
+
+---
+
+
+## Load the data on global terrorist attacks
 
 ```r
 library(classdata)
@@ -101,34 +132,13 @@ str(terr_attacks.wide)
 ```
 
 ---
-## `ggplot2`: Grammar of Graphics
-
-A plot consists of:
-
-1. **mappings** `(aes)`: variables that are mapped to graphical elements
-
-2. **layers:** graphical elements (`geoms` such as points, lines, rectangles, text, etc.) and statistical transformations (`stats` such as identity, counts, bins, etc.)
-
-3. **scales:** map values in the data space to values in the aesthetic space (color, size, shape, position)
-
-4. **coordinate system** `(coord)`: Cartesian, but can be others
-
-5. **facetting:** subsetting and arranging data
-
-6. **theme:** fine-tuning the result, e.g. font, background, margins
----
-## Scatterplot
-
-- Need two continuous variables
-
-- `aes`: what variables are you mapping? Scatterplots need a mapping for `x` and a mapping for `y`.
 
 
 ```r
 library(ggplot2)
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`, y=`Bombing/Explosion`))+geom_point()
 ggplot(data=terr_attacks.wide, aes(x=log(`Armed Assault`+1), y=log(`Bombing/Explosion`+1)))+geom_point()
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion")
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
 ---
@@ -144,6 +154,7 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1)
   - Outliers
   
 ---
+## Interpreting Scatterplots: Example 
 
 &lt;img src="./pop_exp.png" width="350px" style="display: block; margin: auto;" /&gt;
 
@@ -179,10 +190,35 @@ terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
 library(ggplot2)
 terr_attacks.wide$dem&lt;-"Aut"
 terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_x_log10("Armed Assault")+scale_y_log10("Bombing/Explosion") 
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
 &lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-9-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Scale by GDP/cap
+
+
+```r
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
+```
+
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+---
+## Your Turn
+
+1. Plot the number of assassinations against the number of hostage takings (kidnappings) using a regular (not logged) scale.
+
+2. Is there evidence that you may want to use a logged scale, i.e. the distributions of the plotted variables are skewed? 
+
+3. Plot the number of assassinations against the number of hostage takings (kidnappings) using logged scale. Make sure to transform the values, so as to avoid taking the log of 0. Adjust the labels accordingly.
+
+4. Color your observations by regime type. Change size based on the countries' population.
+
+5. Describe the relationship between assassinations and hostage taking (kidnapping).
+
+
 
 
 ---
@@ -192,6 +228,9 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1,
 Can facet to display plots of subsets of data: `facet_wrap`, `facet_grid`
 
 - E.g., can facet by region, year, etc.
+
+- `facet_wrap` optimizes the number of rows and columns
+- `facet_grid` allows you to decide to facet by column, row, or both (if conditioning on two variables). Works best if the conditioning variables have 2-4 categories.
 
 ---
 
@@ -225,10 +264,31 @@ Code the rest of the values of `region` using the following coding scheme:
 ## Facet by Region
 
 ```r
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,colour=dem,size=GDPpc))+facet_wrap(~region)+geom_point()+scale_y_log10("Bombing/Explosion")+scale_x_log10("Armed Assault")
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,colour=dem,size=GDPpc))+facet_wrap(~region)+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
-&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-12-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-14-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+```r
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,size=GDPpc))+facet_grid(region~dem)+
+  geom_point()+ scale_y_log10("Bombing/Explosion",breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+
+  scale_x_log10("Armed Assault",breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
+```
+
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-14-2.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+## What We Learned
+
+- Intro to thoughtful graphics
+
+- Scatterplots using `ggplot2`
+  - Color, size, facetting
+
+- Using logged scales
+
+- Titles, breaks, and labels
+
+- Recoding variables
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
