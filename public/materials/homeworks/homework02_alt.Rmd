@@ -1,0 +1,49 @@
+---
+title: 'POL 478 - Homework #2'
+author: "Your Name"
+date: " "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Make sure to replace "Your Name" in the YAML (top of this script) with your name.
+
+## Data on Global Terrorist Attacks
+
+2. Run the chunk below to load the package `classdata` and two datasets: `terr_attacks` and `terr_attacks.wide`. You can do so by pressing the green arrow in the top right corner of the chunk. If the code gives you an error, make sure that you installed the package `classdata` (see notes from class).
+
+```{r}
+library(classdata)
+data(terr_attacks.wide)
+```
+
+3. Plot the number of assassinations against the number of hostage takings (kidnappings) using a regular (not logged) scale.
+
+```{r}
+#Type code below:
+
+```
+
+4. Is there evidence that you may want to use a logged scale, i.e. the distributions of the plotted variables are skewed? [Type your answer here]
+
+5. Plot the number of assassinations against the number of hostage takings (kidnappings) using logged scale. Make sure to transform the values, so as to avoid taking a log of 0. Adjust the value labels and axis titles to make the graph look publication-ready.
+
+```{r}
+#Type code below:
+
+```
+
+6. Describe the relationship between assassinations and hostage taking (kidnapping). [Type your answer here]
+
+
+7. Knit the RMarkdown file (press the “Knit” button above) and read through the corresponding html file.
+
+Note: 
+
+This homework is supposed to be mainly a code reading exercise. You should not have to program extensively. Instead, you have to figure out which pieces you need to copy and adjust. 
+
+
+For the submission: submit your solution in an R Markdown file and (just for insurance) submit the corresponding html file with it. 
