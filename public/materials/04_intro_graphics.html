@@ -206,22 +206,6 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1,
 
 &lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
 ---
-## Your Turn
-
-1. Plot the number of assassinations against the number of hostage takings (kidnappings) using a regular (not logged) scale.
-
-2. Is there evidence that you may want to use a logged scale, i.e. the distributions of the plotted variables are skewed? 
-
-3. Plot the number of assassinations against the number of hostage takings (kidnappings) using logged scale. Make sure to transform the values, so as to avoid taking the log of 0. Adjust the labels accordingly.
-
-4. Color your observations by regime type. Change size based on the countries' population.
-
-5. Describe the relationship between assassinations and hostage taking (kidnapping).
-
-
-
-
----
 
 ## Facetting
 
@@ -267,7 +251,7 @@ Code the rest of the values of `region` using the following coding scheme:
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,colour=dem,size=GDPpc))+facet_wrap(~region)+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
-&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-14-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-13-1.png" width="350px" style="display: block; margin: auto;" /&gt;
 
 ```r
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,size=GDPpc))+facet_grid(region~dem)+
@@ -275,8 +259,10 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,s
   scale_x_log10("Armed Assault",breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
-&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-14-2.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-13-2.png" width="350px" style="display: block; margin: auto;" /&gt;
 
+
+---
 ## What We Learned
 
 - Intro to thoughtful graphics
