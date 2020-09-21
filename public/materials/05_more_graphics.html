@@ -141,6 +141,31 @@ Hint: Use `?summarise` to find out how to get the median.
 
 
 ---
+## Adding Nuance
+
+Are democracies more vulnerable to certain types of attacks?
+
+- Need to aggregate by regime *and* attack type
+
+
+```r
+attks1 &lt;-terr_attacks %&gt;%
+  group_by(dem, type) %&gt;%
+  summarise(`num_attacks`=mean(`num_attacks`),.groups="keep")
+```
+
+---
+## Your Turn
+
+- Plot number attacks by regime type. Facet by the type of attack.
+
+- Are democracies more vulnerable to certain types of attacks? Which ones? Why do you think that is?
+
+
+
+
+
+---
 ## What We Learned
 
 - Dealing with missing data
