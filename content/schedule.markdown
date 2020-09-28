@@ -42,7 +42,7 @@ All the class materials will be posted/updated here.
         <td>Visualization of Categorical Data</td>
         <td>
           <dl>
-          <dd> <a href="../materials/05_more_graphics.html" target=_blank>More Graphics</a> |<a href="code/stat478-sep-28.R"target=_blank> Code in class </a>
+          <dd> <a href="../materials/05_more_graphics.html" target=_blank>More Graphics</a> |<a href="../materials/scripts/week2_Rscript.R"target=_blank> Code in class </a>
           </dd>
           </dl>
         </td>

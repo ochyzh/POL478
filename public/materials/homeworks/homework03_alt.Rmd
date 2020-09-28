@@ -1,0 +1,80 @@
+---
+title: 'POL 478 - Homework #3'
+author: "Your Name"
+date: " "
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Make sure to replace "Your Name" in the YAML (top of this script) with your name.
+
+## Data on US Covid-19 cases
+
+2. Run the chunk below to load the package `classdata` and the data `covid` that contain information on the US COVID-19 cases  (monthly). Look at the help for the data to find out what variables are included. NOte that the last line removes rows with missing values from the data.
+
+```{r}
+library(classdata)
+data(covid)
+covid<-na.omit(covid)
+```
+
+3. Make a scatterplot of new cases as a proportion of the county population (y-axis) against the median income (x-axis). Log one or both variables if necessary. Note: you will need to divide the new cases by the county population. If you choose to log your variables, make the necessary transformations. Adjust the labels, titles, and the background to make a publication-ready graph.
+
+```{r}
+#Type your code here
+
+
+```
+
+4. Describe the relationship between county median income and the number of new Covid-19 cases.  Did you log either of the variables?  Why or why not? [Type your answer here]
+
+5. Generate a new variable, `blue`, that equals to `Blue` if the county had more votes for Clinton than for Trump, and `Red` otherwise.
+
+```{r}
+#Type your code here
+
+
+```
+
+
+6. Facet the plot from question 3 by whether the state is red or blue.
+
+```{r}
+
+```
+
+7. Facet so as to show the month on the rows and whether the state is blue or red on the columns.
+
+```{r}
+
+```
+
+8. What is the relationship between income, state political leaning, the number of covid-19 cases, and time? Why is this what you find?  What are some other ways we could look at these data (when we learn more about data management)? What types of patterns do you expect to find?
+
+9. Run the chunk below to subset the data just to the state of Iowa. Note that the resulting dataset is named `covid_ia`
+```{r}
+covid_ia<-subset(covid, state=="IA")
+```
+
+10. Plot the number of covid-19 cases, `new_confirmed`, per capita against Trump's 2016 vote margin, `trumpmarg`, (the x-axis) for the state of Iowa. Vary the size of the markers based on the level of urbanization. 
+
+```{r}
+
+```
+
+
+11. Describe the plot. [Type your answer here]
+
+12. Knit the RMarkdown file (press the “Knit” button above) and read through the corresponding html file.
+
+Note: 
+
+This homework is supposed to be mainly a code reading exercise. You should not have to program extensively. Instead, you have to figure out which pieces you need to copy and adjust. 
+
+
+For the submission: submit your solution in an R Markdown file and (just for insurance) submit the corresponding html file with it. 

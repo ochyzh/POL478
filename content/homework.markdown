@@ -31,6 +31,15 @@ Homework assignments are made available at the end of class and are due the foll
           </dl>
         </td>
        </tr>
+       <tr>
+        <td>Oct 5</td>
+        <td>
+          <dl>
+          <dd><a href="../materials/homeworks/homework03_alt.Rmd" target=_blank>Homework 3</a> 
+          </dd>
+          </dl>
+        </td>
+       </tr>
       </tbody>
   </table>
 </div>
