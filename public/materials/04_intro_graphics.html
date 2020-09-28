@@ -178,8 +178,8 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1)
 
 
 ```r
-terr_attacks.wide$dem&lt;-"Aut"
-terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
+terr_attacks.wide$dem&lt;-"Autocracy"
+terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Democracy"
 ```
 
 ---
@@ -188,12 +188,65 @@ terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
 
 ```r
 library(ggplot2)
-terr_attacks.wide$dem&lt;-"Aut"
-terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Dem"
-ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
+terr_attacks.wide$dem&lt;-"Autocracy"
+terr_attacks.wide$dem[terr_attacks.wide$polity2&gt;7]&lt;-"Democracy"
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+  scale_colour_discrete(name = "Regime Type")
 ```
 
 &lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-9-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+---
+## Printer-Friendly Plot
+
+If intended for print, consider using a gray scale.
+
+
+```r
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+  scale_colour_grey(name = "Regime Type")
+```
+
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+---
+Or change marker type rather than colors
+
+
+```r
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, shape=dem,))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_shape_manual(name = "Regime Type",values=c(1,3))
+```
+
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-11-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Colorblind-Friendly Colors
+
+- &lt;a href=http://www.cookbook-r.com/Graphs/Colors_(ggplot2)&gt;Colorblind-Friendly Colors&lt;/a&gt;
+
+
+```r
+cbPalette &lt;- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette &lt;- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+  scale_colour_manual(name = "Regime Type", values=cbPalette)
+```
+
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-12-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Set Theme Options
+
+- Control the overall looks of your plot
+
+`?theme`
+
+
+```r
+#Set theme options:
+theme_set(theme_grey() + #set the theme to the canned theme named "theme_bw"
+            theme(panel.background = element_rect(fill = NA, color = 'black'))+ #remove the background color (fill), make the axes black
+            theme(axis.text=element_text(size=10), axis.title=element_text(size=12,face="bold")))
+```
+
 
 ---
 
@@ -204,7 +257,7 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1,
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1, y=`Bombing/Explosion`+1, colour=dem,size=GDPpc))+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
-&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-14-1.png" width="350px" style="display: block; margin: auto;" /&gt;
 ---
 
 ## Facetting
@@ -251,7 +304,7 @@ Code the rest of the values of `region` using the following coding scheme:
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,colour=dem,size=GDPpc))+facet_wrap(~region)+geom_point()+scale_y_log10("Bombing/Explosion", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))+scale_x_log10("Armed Assault", breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
-&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-13-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-17-1.png" width="350px" style="display: block; margin: auto;" /&gt;
 
 ```r
 ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,size=GDPpc))+facet_grid(region~dem)+
@@ -259,7 +312,8 @@ ggplot(data=terr_attacks.wide, aes(x=`Armed Assault`+1,y=`Bombing/Explosion`+1,s
   scale_x_log10("Armed Assault",breaks=c(1,11,101,1001,10001),labels=c("0","10","100","1000","10000"))
 ```
 
-&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-13-2.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_intro_graphics_files/figure-html/unnamed-chunk-17-2.png" width="350px" style="display: block; margin: auto;" /&gt;
+
 
 
 ---
