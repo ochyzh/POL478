@@ -42,19 +42,19 @@ covid<-na.omit(covid)
 ```
 
 
-6. Facet the plot from question 3 by whether the state is red or blue.
+6. Facet the plot from question 3 by whether the county is red or blue.
 
 ```{r}
 
 ```
 
-7. Facet so as to show the month on the rows and whether the state is blue or red on the columns.
+7. Facet so as to show the month on the rows and whether the county is blue or red on the columns.
 
 ```{r}
 
 ```
 
-8. What is the relationship between income, state political leaning, the number of covid-19 cases, and time? Why is this what you find?  What are some other ways we could look at these data (when we learn more about data management)? What types of patterns do you expect to find?
+8. What is the relationship between income, county political leaning, the number of covid-19 cases, and time? Why is this what you find?  What are some other ways we could look at these data (when we learn more about data management)? What types of patterns do you expect to find?
 
 9. Run the chunk below to subset the data just to the state of Iowa. Note that the resulting dataset is named `covid_ia`
 ```{r}
