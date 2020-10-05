@@ -19,6 +19,13 @@ class: center, middle, inverse, title-slide
 
 
 
+## Visualizing Large Datasets
+
+The challenge---aggregate to a suitable level
+
+Useful commands: `summarise`, `filter`, `mutate`
+
+---
 ## Example 1
 
 Question: Are democracies more vulnerable to terrorist attacks?
@@ -72,8 +79,8 @@ summary(terr_attacks[,c("num_attacks","polity2")])
       - It is safe to assume that regimes with "unknown" regime types are not democracies.
 
 ```r
-terr_attacks$dem&lt;-"Aut"
-terr_attacks$dem[terr_attacks$polity2&gt;7]&lt;-"Dem"
+terr_attacks$dem&lt;-"Autocracy"
+terr_attacks$dem[terr_attacks$polity2&gt;7]&lt;-"Democracy"
 ```
 
   
@@ -166,15 +173,103 @@ attks1 &lt;-terr_attacks %&gt;%
 
 
 ---
+## RColorBrewer
+
+Pre-set color schemes:
+
+```r
+library(RColorBrewer)
+display.brewer.all(n=NULL, type="all", select=NULL, exact.n=TRUE, 
+colorblindFriendly=TRUE)
+```
+
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Over Time
+
+```r
+attks2 &lt;-terr_attacks %&gt;%
+  group_by(dem, type, year) %&gt;%
+  summarise(`num_attacks`=mean(`num_attacks`),.groups="keep")
+attks2$type&lt;-recode(attks2$type,"Bombing/Explosion"="Explosion",
+                    "Facility/Infrastructure Attack"="Facility Attack",
+                    "Hostage Taking (Kidnapping)"="Kidnapping",
+                    "Hostage Taking (Barricade Incident)"="Barricade")
+
+ggplot(data=attks2, aes(x=year,y=num_attacks, fill=dem))+
+  geom_bar(stat="identity", position="fill")+
+  facet_wrap(~type)+ylab("Proportion")+
+  scale_x_continuous(breaks=seq(from=2001,to=2014,by=6))+scale_fill_brewer(name="Regime type", palette="Dark2")+theme_classic()
+```
+
+```r
+ggplot(data=attks2, aes(x=year,y=num_attacks, fill=dem))+
+  geom_bar(stat="identity")+
+  facet_wrap(~type, scale="free")+ylab("Number of Attacks")+scale_fill_brewer(name="Regime type", palette="Dark2")+
+  scale_x_continuous(breaks=seq(from=2001,to=2014,by=6))+theme_classic()
+```
+
+---
+## Line Plots vs Bar Graphs
+
+- What can you tell from a line plot that you could not from the corresponding bar graph?
+
+- Why overlay a line plot with a scatter plot?
+
+- What are the advantages of plotting separate lines vs a single line (proportion)?
+
+- Why do we need a horizontal line at y=0.5?
+
+
+```r
+ggplot(data=attks2, aes(x=year,y=num_attacks, color=dem))+
+  geom_line(size=1)+geom_point(size=1)+
+  facet_wrap(~type, scale="free")+ylab("Number of Attacks")+scale_colour_brewer(name="Regime type", palette="Dark2")+
+  scale_x_continuous(breaks=seq(from=2001,to=2014,by=6))+theme_classic()+theme(legend.position="bottom")
+
+attks3&lt;-attks2 %&gt;% pivot_wider(names_from=dem,values_from=num_attacks) %&gt;% mutate(prop_dem=Democracy/(Autocracy+Democracy))
+ggplot(data=attks3, aes(x=year,y=prop_dem))+
+  geom_line(size=1)+geom_point(size=1)+
+  facet_wrap(~type)+
+  geom_hline(aes(yintercept=.5), linetype=2)+
+  ylab("Proportion of Democracies")+scale_colour_brewer(name="Regime type", palette="Dark2")+ scale_x_continuous(breaks=seq(from=2001,to=2014,by=6))+theme_classic()
+```
+
+
+---
+## Utilize Proximity
+
+- If you wanted to know *what attack type is equally likely in both an autocracy and a democracy?* which plot makes this easier to answer?
+
+.pull-left[
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-13-1.png" width="450px" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-14-1.png" width="450px" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Your Turn
+
+Make the two plots from the previous slide.
+
+---
+
 ## What We Learned
 
 - Dealing with missing data
 
 - Aggregating using `summarise`
 
-- Bar graphs
+- Bar graphs, line plots
 
-- Setting theme, fill, and the system of coordinates
+- Raw numbers vs. proportions
+
+- Utilizing proximity
+
+- Fill, system of coordinates
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
