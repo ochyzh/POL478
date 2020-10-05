@@ -111,16 +111,53 @@ terr_attacks$dem[terr_attacks$polity2&gt;7]&lt;-"Democracy"
 ]
 
 ---
+
+## Aggregate by Year
+
+.pull-left[
+&lt;img src="./country_yr.png" width="250px" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="./yr.png" width="150px" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Aggregate by Regime Type
+
+.pull-left[
+&lt;img src="./country_yr.png" width="250px" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="./reg_type.png" width="150px" style="display: block; margin: auto;" /&gt;
+]
+
+---
 ## Aggregating using `summarise`
 
 
 ```r
 library(tidyverse)
 library(magrittr)
+# by country
+terr_attacks %&gt;% select(country, year, num_attacks, everything()) %&gt;% group_by(country) %&gt;% summarise(num_attacks=sum(num_attacks), .groups="keep")
+
+#by year
+terr_attacks %&gt;% select(country, year, num_attacks, everything()) %&gt;% group_by(year) %&gt;% summarise(num_attacks=sum(num_attacks), .groups="keep") 
+```
+
+
+```r
+library(tidyverse)
+library(magrittr)
+#by regime
 attks &lt;-terr_attacks %&gt;%
   group_by(dem) %&gt;%
   summarise(`num_attacks`=mean(`num_attacks`),.groups="keep")
 ```
+
 
 *Note that `%&gt;%` is called the pipe operator and means "then", i.e. the code above says "group by country, then summarise the number of armed assaults"
 ---
@@ -137,7 +174,7 @@ theme_set(theme_grey() + theme(panel.background = element_rect(fill = NA, color 
 ggplot(data=attks, aes(x=dem,y=num_attacks))+geom_bar(stat="identity", fill="gray80", width=.5)+ylab("Average Number of Attacks")+scale_x_discrete("Regime Type")+coord_flip()
 ```
 
-&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-7-1.png" width="250px" style="display: block; margin: auto;" /&gt;
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-12-1.png" width="250px" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Your Turn
@@ -183,7 +220,7 @@ display.brewer.all(n=NULL, type="all", select=NULL, exact.n=TRUE,
 colorblindFriendly=TRUE)
 ```
 
-&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-10-1.png" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-15-1.png" width="350px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -244,10 +281,10 @@ ggplot(data=attks3, aes(x=year,y=prop_dem))+
 - If you wanted to know *what attack type is equally likely in both an autocracy and a democracy?* which plot makes this easier to answer?
 
 .pull-left[
-&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-13-1.png" width="450px" style="display: block; margin: auto;" /&gt;
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-18-1.png" width="450px" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[
-&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-14-1.png" width="450px" style="display: block; margin: auto;" /&gt;
+&lt;img src="05_more_graphics_files/figure-html/unnamed-chunk-19-1.png" width="450px" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
