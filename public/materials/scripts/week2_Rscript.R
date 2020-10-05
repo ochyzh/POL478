@@ -2,7 +2,7 @@ rm(list=ls())
 library(classdata)
 data("terr_attacks.wide")
 
-install.packages("ggplot2")
+#install.packages("ggplot2")
 library(ggplot2)
 
 ggplot(data=terr_attacks.wide,

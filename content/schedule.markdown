@@ -52,7 +52,7 @@ All the class materials will be posted/updated here.
         <td>Introduction to Data Management</td>
         <td>
           <dl>
-          <dd> <a href="../materials/06_intro_to_data_management.html" target=_blank> intro to tidyverse</a> |<a href="code/stat478-oct-5.R"target=_blank> Code in class </a> 
+          <dd> <a href="../materials/06_intro_to_data_management.html" target=_blank> intro to tidyverse</a> |<a href="../materials/scripts/week4_Rscript.R"target=_blank> Code in class </a> 
           </dd>
           </dl>
         </td>
