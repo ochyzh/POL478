@@ -22,39 +22,18 @@ class: center, middle, inverse, title-slide
 
 
 ## Outline
-- The pipe operator
+
 - Logical operators
-- Subsetting the data: `filter` and `subset`
+
+- Subseting the data: `filter` and `subset`
+
+- The pipe operator
+
 - Other `dplyr` functions
-- Reshaping data 
+
+
 ---
 
-## The Pipe Operator `%&gt;%`
-
-Allows to apply consecutive functions to an object
-
-- read `%&gt;%` as "then do"
-
-
-```r
-library(classdata)
-library(ggplot2)
-library(tidyverse)
-library(magrittr)
-data(terr_attacks.wide)
-```
-
-
-```r
-ggplot(data=filter(terr_attacks.wide, country=="Canada"), aes(x=year,y=`Bombing/Explosion`))+geom_point()
-```
-
-becomes:
-
-```r
-terr_attacks.wide %&gt;% filter(country=="Canada") %&gt;% ggplot(aes(x=year,y=`Bombing/Explosion`))+geom_point()
-```
----
 ## Logical Operators
 
 - `&lt;`, `&gt;`, `==`, `!=`, `&lt;=`, `&gt;=`
@@ -93,9 +72,37 @@ subset(terr_attacks.wide, year==2014 | country=="Canada")
 ```
 ---
 
+
+## The Pipe Operator `%&gt;%`
+
+Allows to apply consecutive functions to an object
+
+- read `%&gt;%` as "then do"
+
+
+```r
+library(classdata)
+library(ggplot2)
+library(tidyverse)
+library(magrittr)
+data(terr_attacks.wide)
+```
+
+
+```r
+ggplot(data=filter(terr_attacks.wide, country=="Canada"), aes(x=year,y=`Bombing/Explosion`))+geom_point()
+```
+
+becomes:
+
+```r
+terr_attacks.wide %&gt;% filter(country=="Canada") %&gt;% ggplot(aes(x=year,y=`Bombing/Explosion`))+geom_point()
+```
+---
+
 ## Your Turn
 
-- Use a pipe operator to first subset `terr_attacks` to just Hijackings or Kidnappings, then aggregate the number of attacks to the highest number of attacks by type in each year, then make a scatterplot of hijackings by year. 
+- Use a pipe operator to first subset `terr_attacks` to just Hijackings or Kidnappings, then aggregate the number of attacks to the highest number of attacks by type in each year, then make a bar graph of each attack type (y-axis) by year (x-axis) and use fill to denote the attack type. 
 
 
 ---
@@ -104,7 +111,7 @@ subset(terr_attacks.wide, year==2014 | country=="Canada")
 
 `mutate` is a function from the `{dplyr}` package
 
-It allows us to ceate/recode new variables in a dataset
+It allows us to generate/recode variables in a dataset
 
 Unlike `summarise`, applies functions within rows rather than columns.
 
@@ -120,14 +127,18 @@ terr_attacks.wide %&gt;%
 ## Your Turn
 
 Use a pipe operator and `mutate` to add the following variables to the `terr_attacks.wide` dataset:
+
 1. `num_attks` which contains the total number of attacks (all types);
+
 2. `pop_thou` which contain the total population in thousands;
+
 3. `GDP` (can you figure out how to calculate this with the variables we have?)
 
 ---
 ## Other `dplyr` verbs
 
--`arrange`--reorder (sort) the rows by a column
+- `arrange`--reorder (sort) the rows by a column
+
 - `select`--select specific columns/variables of a data frame (as opposed to `filter` that selects rows)
 
 
@@ -135,45 +146,6 @@ Use a pipe operator and `mutate` to add the following variables to the `terr_att
 data("terr_attacks")
 terr_attacks %&gt;% filter(country=="Canada") %&gt;% select(year,type,num_attacks) %&gt;% arrange(-num_attacks)
 ```
-
----
-## Reshaping Data
-
-- `tidyr: pivot_longer` and `pivot_wider` (former `gather` and `spread`)
-
----
-## Multiple ways to store the same information
-
-Option #1
-
-
-```
-##                    province         X2017         X2010         X2000
-## 1             ------------- ------------- ------------- -------------
-## 2                   Alberta          81.5          81.3          79.4
-## 3          British Columbia          82.2          82.1          80.3
-## 4                  Manitoba          80.0          79.9          78.0
-## 5             New Brunswick          80.7          80.7          78.9
-## 6 Newfoundland and Labrador          79.8          79.6          77.3
-```
-
-
-Option #2
- 
-
-```
-##           province year life_exp
-## 1          Alberta 2017     81.5
-## 2          Alberta 2010     81.3
-## 3          Alberta 2000     79.4
-## 4          Alberta 1990     77.8
-## 5          Alberta 1980     75.0
-## 6 British Columbia 2017     82.2
-```
-```
- 
- 
- Source: [Wikipedia](https://en.wikipedia.org/wiki/List_of_Canadian_provinces_and_territories_by_life_expectancy)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
