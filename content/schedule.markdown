@@ -62,7 +62,7 @@ All the class materials will be posted/updated here.
         <td>Advanced Data Management</td>
         <td>
           <dl>
-          <dd> <a href="../materials/07_reshaping.html" target=_blank> reshaping data</a> |<a href="../materials/scripts/week5_Rscript.R"target=_blank> Code in class </a>
+          <dd> <a href="../materials/07_reshaping.html" target=_blank> reshaping data</a> |<a href="../materials/scripts/week5_Rscript.Rmd"target=_blank> Code in class </a>
           </dd>
           </dl>
         </td>

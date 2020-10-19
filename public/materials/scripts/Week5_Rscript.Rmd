@@ -1,0 +1,105 @@
+---
+title: "Untitled"
+author: "Olga Chyzh"
+date: "10/19/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r }
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(magrittr)
+library(classdata)
+data("terr_attacks")
+```
+
+```{r}
+#plot A
+terr_attacks$dem<-"Autocracy"
+terr_attacks$dem[terr_attacks$polity2>7]<-"Democracy"
+
+terr_attacks %>% group_by(dem, type) %>% summarise(num_attacks=mean(num_attacks), .groups="keep")->attks1
+attks1$type<-recode(attks1$type,"Bombing/Explosion"="Explosion",
+                    "Facility/Infrastructure Attack"="Facility Attack",
+                    "Hostage Taking (Kidnapping)"="Kidnapping",
+                    "Hostage Taking (Barricade Incident)"="Barricade", "Unarmed Assault"="Unarmed Asslt")
+ggplot(data=attks1, aes(x=dem, y=num_attacks, fill=dem))+geom_bar(stat="identity")+facet_wrap(~type, scales="free")+theme(legend.position="bottom")+scale_x_discrete("",breaks=NULL)+scale_y_continuous("Number of Attacks")+scale_fill_discrete("")+ggtitle("Plot A")
+
+#plot B
+ggplot(data=attks1, aes(x=type, y=num_attacks, fill=type))+geom_bar(stat="identity")+facet_wrap(~dem)+theme(legend.position="bottom")+scale_x_discrete("",breaks=NULL)+scale_y_continuous("Number of Attacks")+scale_fill_discrete("")+ggtitle("Plot B")
+
+#Plot C
+ggplot(data=attks1, aes(x=type, y=num_attacks, fill=dem))+geom_bar(stat="identity", position="fill")+theme(legend.position="bottom")+coord_flip()+scale_y_continuous("Proportion of Attacks")+scale_fill_discrete("")+scale_x_discrete("")+ggtitle("Plot C")
+
+#Plot D
+ggplot(data=attks1, aes(x=type, y=num_attacks, fill=dem))+geom_bar(stat="identity")+theme(legend.position="bottom")+coord_flip()+scale_y_continuous("Number of Attacks")+scale_fill_discrete("")+scale_x_discrete("")+ggtitle("Plot C")
+```
+
+```{r}
+terr_attacks %>% group_by(year,dem, type) %>% summarise(num_attacks=mean(num_attacks), .groups="keep")->attks2
+
+attks2$type<-recode(attks2$type,"Bombing/Explosion"="Explosion",
+                    "Facility/Infrastructure Attack"="Facility Attack",
+                    "Hostage Taking (Kidnapping)"="Kidnapping",
+                    "Hostage Taking (Barricade Incident)"="Barricade", "Unarmed Assault"="Unarmed Asslt")
+
+ggplot(data=attks2, aes(x=year,y=num_attacks, fill=dem))+geom_bar(stat="identity")+facet_wrap(~type, scale="free")+theme(legend.position="bottom")+scale_x_continuous("")+scale_fill_discrete("")+scale_y_continuous("Number of Attacks")
+
+ggplot(data=attks2, aes(x=year,y=num_attacks, fill=dem))+geom_bar(stat="identity", position="fill")+facet_wrap(~type, scale="free")+theme(legend.position="bottom")+scale_x_continuous("")+scale_fill_discrete("")+scale_y_continuous("Number of Attacks")
+
+ggplot(data=attks2, aes(x=year,y=num_attacks, group=dem))+geom_line(stat="identity", position="fill")+facet_wrap(~type, scale="free")+theme(legend.position="bottom")+scale_x_continuous("")+scale_fill_discrete("")+scale_y_continuous("Number of Attacks")+geom_hline(aes(yintercept=.5), linetype=2)
+
+ggplot(data=attks2, aes(x=year,y=num_attacks, color=dem))+geom_line()+geom_point()+facet_wrap(~type, scale="free")+theme(legend.position="bottom")+scale_x_continuous("")+scale_fill_discrete("")+scale_y_continuous("Number of Attacks")
+```
+
+```{r}
+filter(terr_attacks.wide, country=="Canada")
+filter(terr_attacks.wide, country!="Canada")
+filter(terr_attacks.wide, year>=2010  | country=="Canada")
+
+subset(terr_attacks.wide, country=="Canada")
+subset(terr_attacks.wide, country!="Canada")
+subset(terr_attacks.wide, year>=2010 & country=="Canada")
+```
+
+```{r}
+
+attks3<-filter(terr_attacks.wide, country=="Canada")
+ggplot(data=attks3, aes(x=year, y=`Bombing/Explosion`))+geom_point()+geom_line()
+
+
+ggplot(data=filter(terr_attacks.wide, country=="Canada"), aes(x=year, y=`Bombing/Explosion`))+geom_point()+geom_line()
+
+terr_attacks.wide %>% 
+  filter(country=="Canada")  %>%  
+  ggplot(aes(x=year, y=`Bombing/Explosion`))+geom_point()+geom_line()
+  
+```
+
+#Your Turn:
+
+```{r}
+#Set theme options:
+theme_set(theme_grey() + #set the theme to the canned theme named "theme_bw"
+            theme(panel.background = element_rect(fill = NA, color = 'black'))+ #remove the background color (fill), make the axes black
+            theme(axis.text=element_text(size=10), axis.title=element_text(size=12,face="bold")))
+
+terr_attacks %>% 
+  filter(type %in% c("Hijacking","Hostage Taking (Kidnapping)")) %>%
+  group_by(year, type) %>% summarise(num_attacks=max(num_attacks), .groups="keep")%>%
+  ggplot(aes(x=year,y=num_attacks, fill=type))+geom_bar(stat="identity")
+  
+terr_attacks.wide$hostages<-terr_attacks.wide$`Hostage Taking (Kidnapping)`+terr_attacks.wide$`Hostage Taking (Barricade Incident)`
+
+terr_attacks.wide %>% mutate(hostages1=`Hostage Taking (Kidnapping)`+`Hostage Taking (Barricade Incident)`)  %>% select(country,year,`Armed Assault`, everything())%>% arrange(year) %>% head()
+
+```
+
