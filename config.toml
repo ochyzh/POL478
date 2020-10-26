@@ -4,7 +4,7 @@ googleAnalytics = "UA-177408185-1"
 languageCode = "en-us"
 title = "POL 478H1"
 theme = "hugo-xmin"
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 footnotereturnlinkcontents = "↩"
 
 [permalinks]
