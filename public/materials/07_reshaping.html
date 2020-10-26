@@ -23,6 +23,7 @@ class: center, middle, inverse, title-slide
 
 
 
+
 # Reshaping Data
 
 - `tidyr: pivot_longer` and `pivot_wider` (former `gather` and `spread`)
@@ -34,13 +35,13 @@ Option #1
 
 
 ```
-##                    province         X2017         X2010         X2000
-## 1             ------------- ------------- ------------- -------------
-## 2                   Alberta          81.5          81.3          79.4
-## 3          British Columbia          82.2          82.1          80.3
-## 4                  Manitoba          80.0          79.9          78.0
-## 5             New Brunswick          80.7          80.7          78.9
-## 6 Newfoundland and Labrador          79.8          79.6          77.3
+##                    province X2017 X2010 X2000
+## 2                   Alberta  81.5  81.3  79.4
+## 3          British Columbia  82.2  82.1  80.3
+## 4                  Manitoba  80.0  79.9  78.0
+## 5             New Brunswick  80.7  80.7  78.9
+## 6 Newfoundland and Labrador  79.8  79.6  77.3
+## 7     Northwest Territories  77.0  77.8  75.5
 ```
 
 
@@ -247,9 +248,45 @@ canada_le.wide %&gt;% gather(key="year",value="life_exp",-province)
 
 1. Determine the reason for repeating columns (e.g., each attack type is in a separate column).
 
-2. Specify the repeating columns as your `cols` argument, your `names_to` argument is just the name you want to give to the variable that will contain the names of the repeating columns, and your `values_to` argument is the name you want to giv eto the variable that will contain all the values from these columns. 
+2. Specify the repeating columns as your `cols` argument, your `names_to` argument is just the name you want to give to the variable that will contain the names of the repeating columns, and your `values_to` argument is the name you want to give to the variable that will contain all the values from these columns. 
 
 3. Try your code without saving the output into a new object (view it on the screen only) until it works.
+
+---
+## Messy Data 1: World Development Indicators
+
+- Download the World Development Indicators Data directly from [the World Bank](http://datatopics.worldbank.org/world-development-indicators/). Click on `CSV download` under `Bulk Downloads.` The file is quite large, do give it some time. The file you need is `WDIdata.csv` (feel free to delete the rest).
+
+- As you can see if you open it, this file is very large and unwieldy, yet it contains information on key variables used in Social Sciences.
+
+- We are going to clean up these data in the following ways:
+1. Extract just the data on GDP (constant 2010 USD). Remove all the unnecessary rows and columns.
+2. Convert these data from wide to long form.
+3. Add a variable `ccode` that will allow us to merge these data with other datasets.
+
+---
+## Your Turn 
+
+Take a minute to open the file and look at it. Can you complete steps 1 and 2?
+
+
+---
+
+## Adding `ccode`
+
+Package `countrycode`
+
+
+```r
+library(countrycode)
+d$ccode&lt;-countrycode(d$`Country Name`,'country.name','cown')
+```
+
+
+## Your Turn
+
+1. Edit the code we used for the previous exercise, so as to extract GDP and `Foreign direct investment, net inflows (% of GDP)`.
+2. Use `pivot_wider` and/or `pivot_longer` functions to transform these data into long format (i.e., country-years as rows; country names, country codes, year, GDP and FDI as columns)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
