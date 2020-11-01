@@ -72,7 +72,7 @@ All the class materials will be posted/updated here.
         <td>Loops and Functions</td>
         <td>
           <dl>
-          <dd> <a href="../materials/06_loops.html" target=_blank> loops and functions</a> |<a href="../materials/scripts/week6_Rscript.R"target=_blank> Code in class </a>
+          <dd> <a href="../materials/08_loops.html" target=_blank> loops and functions</a>|<a href="../materials/florida2016.zip" target=_blank> Florida 2016 data </a> |<a href="../materials/scripts/week6_Rscript.R"target=_blank> Code in class </a>
           </dd>
           </dl>
         </td>
