@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>POL 478H1 F</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olga Chyzh [www.olgachyzh.com]" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# POL 478H1 F
+## Loops
+### Olga Chyzh [www.olgachyzh.com]
+
+---
+
+
+
+
+
+
+## Writing Reproducible Code
+
+1. Why is it important to write easy-to-follow code? 
+
+2. What are some ways to enhance the readability of your code?
+
+More Reading:
+- [Karl Browman's website](https://kbroman.org/steps2rr/)
+- [Christine Bahlai's blog](https://practicaldatamanagement.wordpress.com/2014/10/23/baby-steps-for-the-open-curious/)
+
+---
+## Why Use Loops?
+
+Loops are a way to shorten repetitive code like this 
+
+
+```r
+ALA&lt;-read.table("ALA_PctResults20161108.txt", sep="\t", header=FALSE, fill=TRUE)
+BRA&lt;-read.table("BRA_PctResults20161108.txt", sep="\t", header=FALSE, fill=TRUE)
+CAL&lt;-read.table("CAL_PctResults20161108.txt", sep="\t", header=FALSE, fill=TRUE)
+mydata&lt;-rbind(ALA,BRA,CAL)
+```
+
+as
+
+
+```r
+myfilenames&lt;-c("ALA_PctResults20161108.txt","BRA_PctResults20161108.txt","CAL_PctResults20161108.txt")
+
+mydata&lt;-NULL
+for (i in myfilenames){
+d&lt;-read.table(i, sep="\t", header=FALSE, fill=TRUE)  
+mydata&lt;-rbind(mydata,d)
+}
+```
+
+
+---
+
+## Loops Help
+
+- Shorten/clarifie the code
+
+- Reduce the probability of typing errors
+
+- Speed up coding
+
+- Can loop over indices, names, and values
+
+---
+
+## Loop Components
+
+1. The wrapper `for (variable in vector){}`
+
+2. An (initially empty) object to store the result, usually outside the loop 
+
+3. A series of commands that will be applied to each element in the `vector` indexed by `variable`
+
+4. The last line usually (but not always) appends the result to the empty object we started with in 2.
+
+---
+
+## Example 1: Florida Elections Returns 2016
+
+1. Download the zip file that contains Florida 2016 Elections Returns [here](https://pol478.netlify.app/materials/florida2016.zip);
+
+2. Unzip the data, make sure to set your working directory to the folder where you saved the data;
+
+3. We are going to write a loop that opens each of the 68 files in this folder and combines them into a single dataset.
+
+
+
+
+```r
+myfilenames&lt;-list.files()
+mydata&lt;-NULL
+for (i in myfilenames){
+d&lt;-read.table(i, quote="",comment.char="", sep="\t", header=FALSE)  
+mydata&lt;-rbind(mydata,d)
+}
+```
+
+---
+
+## Options for `read.table` 
+
+- `header`--whether the first row of the data contains variable names
+
+- `quote`--whether to interpret quotes as a part of text (e.g., a name with an apostrophe) or are quotes used to denote character variables. If not specified, the function tries to read text within quotes as character.
+
+
+```r
+d&lt;-read.table(myfilenames[18], quote="",sep="\t", header=FALSE, fill=TRUE) 
+```
+
+- `comment.char`--the default behavior for read.table is to treat \# as the beginning of a comment and ignore what follows. We need to turn this option off, as some of files contain \# to denote district number.
+
+
+```r
+d&lt;-read.table(myfilenames[62], quote="", comment.char="",sep="\t", header=FALSE, fill=TRUE) 
+```
+
+- `sep`--the column separator; the default is white space, but in this case it is tab.
+
+---
+
+
+## Your Turn
+
+Edit our loop, so that we only keep data on `Trump Vote` and  `Clinton Vote` for each county. Use a pipe.
+
+
+---
+## Example 3: World Bank Data
+
+1. Change your working directory to where you stored WDI data from last week.
+
+2. We can get these data on the long form the way we did in the homework or using a loop with the indicator name as our variable.
+
+
+The old way:
+
+```r
+d&lt;-read_csv("WDIData.csv", col_names=T) %&gt;% filter(`Indicator Name` %in% c("GDP (constant 2010 US$)","Foreign direct investment, net inflows (% of GDP)")) %&gt;% select(-`Indicator Code`,-`Country Code`,-`2020`,-X66) %&gt;% slice(-(1:94)) %&gt;% pivot_longer(`1960`:`2019`,names_to="year", values_to="Indicator") %&gt;% pivot_wider(names_from="Indicator Name", values_from="Indicator")
+```
+
+
+The new way:
+
+```r
+indname&lt;-c("GDP (constant 2010 US$)","Foreign direct investment, net inflows (% of GDP)")
+mydata&lt;-NULL
+for (ind in indname){
+d&lt;-read_csv("WDIData.csv", col_names=T)  %&gt;% filter(`Indicator Name`==ind) %&gt;% select(-`Indicator Code`,-`Country Code`,-`2020`,-X66) %&gt;% slice(-(1:47)) %&gt;% pivot_longer(`1960`:`2019`,names_to="year", values_to="Indicator") 
+mydata&lt;-rbind(mydata,d)  
+} 
+mydata&lt;-mydata %&gt;% pivot_wider(names_from="Indicator Name", values_from="Indicator")
+```
+
+---
+## Automate Indicator Names
+
+
+
+```r
+d&lt;-read_csv("WDIData.csv", col_names=T)
+indname&lt;-unique(d$`Indicator Name`)
+
+mydata&lt;-NULL
+for (ind in indname[1:5]){
+d&lt;-read_csv("WDIData.csv", col_names=T)  %&gt;% filter(`Indicator Name`==ind) %&gt;% select(-`Indicator Code`,-`Country Code`,-`2020`,-X66) %&gt;% slice(-(1:47)) %&gt;% pivot_longer(`1960`:`2019`,names_to="year", values_to="Indicator") 
+mydata&lt;-rbind(mydata,d)  
+} 
+
+mydata&lt;-mydata %&gt;% pivot_wider(names_from="Indicator Name", values_from="Indicator")
+```
+---
+
+## A Word of Caution
+
+- Loops are not always faster (above example)
+
+- R built-in loop functions, such as `apply` are generally faster, but (beyond the simplest cases) require more advanced programming.
+
+---
+
+## Loops Are Invaluable
+
+- Long repetitive scripts
+
+- Working with network data
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
