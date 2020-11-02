@@ -194,6 +194,55 @@ mydata&lt;-mydata %&gt;% pivot_wider(names_from="Indicator Name", values_from="I
 - Long repetitive scripts
 
 - Working with network data
+
+---
+## Your Turn 1
+
+- Convert the following repeated code into a loop:
+
+
+
+```r
+library(classdata)
+data("terr_attacks.wide")
+a&lt;-mean(terr_attacks.wide[,5],na.rm=T)
+b&lt;-mean(terr_attacks.wide[,6],na.rm=T)
+d&lt;-mean(terr_attacks.wide[,7],na.rm=T)
+e&lt;-mean(terr_attacks.wide[,8],na.rm=T)
+f&lt;-mean(terr_attacks.wide[,9],na.rm=T)
+g&lt;-mean(terr_attacks.wide[,10],na.rm=T)
+h&lt;-mean(terr_attacks.wide[,11],na.rm=T)
+i&lt;-mean(terr_attacks.wide[,12],na.rm=T)
+j&lt;-mean(terr_attacks.wide[,13],na.rm=T)
+k&lt;-mean(terr_attacks.wide[,14],na.rm=T)
+l&lt;-mean(terr_attacks.wide[,15],na.rm=T)
+m&lt;-mean(terr_attacks.wide[,16],na.rm=T)
+
+mymeans&lt;-c(a,b,d,e,f,g,h,i,j,k,l,m)
+```
+
+- Now get the means of these variables using `summarise`
+
+
+
+- Which one is easier/faster?
+
+---
+
+## Your Turn 2
+
+Convert the following repeated code into a loop:
+
+```r
+library(classdata)
+data("terr_attacks.wide")
+a&lt;-mean(terr_attacks.wide$GDPpc,na.rm=T)
+b&lt;-mean(terr_attacks.wide$population,na.rm=T)
+d&lt;-mean(terr_attacks.wide$tradeofgdp,na.rm=T)
+e&lt;-mean(terr_attacks.wide$`Hostage Taking (Kidnapping)`,na.rm=T)
+f&lt;-mean(terr_attacks.wide$Hijacking,na.rm=T)
+mymeans&lt;-c(a,b,d,e,f)
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
