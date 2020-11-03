@@ -72,7 +72,7 @@ All the class materials will be posted/updated here.
         <td>Loops and Functions</td>
         <td>
           <dl>
-          <dd> <a href="../materials/08_loops.html" target=_blank> loops and functions</a>|<a href="../materials/florida2016.zip" target=_blank> Florida 2016 data </a> |<a href="../materials/scripts/week6_Rscript.R"target=_blank> Code in class </a>
+          <dd> <a href="../materials/08_loops.html" target=_blank> loops and functions</a>|<a href="../materials/florida2016.zip" target=_blank> Florida 2016 data </a> |<a href="../materials/scripts/week6_Rscript.R"target=_blank> Code in class </a> 
           </dd>
           </dl>
         </td>
@@ -82,7 +82,7 @@ All the class materials will be posted/updated here.
         <td>Advanced Data Visualization</td>
         <td>
           <dl>
-          <dd> <a href="../materials/07_adv_graphics.html" target=_blank> more graphs</a> |<a href="code/stat478-nov-2.R"target=_blank> Code in class </a>
+          <dd> <a href="../materials/07_adv_graphics.html" target=_blank> more graphs</a> |<a href="../materials/scripts/week7_Rscript.Rmd"target=_blank> Code in class </a>
           </dd>
           </dl>
         </td>

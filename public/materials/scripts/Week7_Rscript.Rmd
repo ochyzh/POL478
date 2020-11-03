@@ -1,0 +1,68 @@
+---
+title: "Week 7 Script"
+author: "Olga Chyzh"
+date: "11/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=F, warning=F}
+library(tidyverse)
+library(magrittr)
+```
+
+```{r}
+d<-read_csv("WDIData.csv", col_names=T) %>% 
+  filter(`Indicator Name`=="GDP (constant 2010 US$)")%>%
+  select(-`Country Code`,-`Indicator Name`,-`Indicator Code`,-`2020`,-X66) %>% 
+  slice(-c(1:47)) %>%
+  pivot_longer(`1960`:`2019`,names_to="year",values_to="GDP")
+
+d %>% filter(`Country Name`=="Canada") %>% 
+  ggplot(aes(x=year,y=GDP/1000000000)) +geom_point()+
+  scale_x_discrete(breaks=seq(from=1970,to=2020,10))
+```
+
+```{r}
+d<-read_csv("WDIData.csv", col_names=T) %>% 
+  filter(`Indicator Name` %in% c("GDP (constant 2010 US$)","Foreign direct investment, net inflows (% of GDP)"))%>%
+  select(-`Country Code`,-`Indicator Code`,-`2020`,-X66) %>% 
+  slice(-c(1:94)) %>%
+  pivot_longer(`1960`:`2019`,names_to="year",values_to="Indicator") %>% pivot_wider(names_from="Indicator Name", values_from="Indicator")
+
+d[1:10,]
+```
+
+```{r}
+myfilenames<-list.files()
+j<-read.table("ALA_PctResults20161108.txt",quote="",comment.char = "",sep="\t", header=F)
+
+mydata<-NULL
+for (i in myfilenames){
+  d<-read.table(i,quote="",comment.char = "",sep="\t", header=F)
+  mydata<-rbind(mydata,d)  
+}
+
+```
+
+
+```{r}
+myfilenames<-list.files()
+myfilenames<-myfilenames[-32]
+mydata<-NULL
+for (i in myfilenames[1]){
+  d<-read.table(i,quote="",comment.char = "",sep="\t", header=F)%>% filter(V15 %in% c("Trump / Pence","Clinton / Kaine")) %>% select(V2,V15,V19)%>%group_by(V15)%>%
+  summarise(county=first(V2),vote=sum(V19), .groups="keep")
+  mydata<-rbind(mydata,d)  
+}
+
+
+j<-read.table("ALA_PctResults20161108.txt",quote="",comment.char = "",sep="\t", header=F) %>% filter(V15 %in% c("Trump / Pence","Clinton / Kaine")) %>% select(V2,V15,V19)%>%group_by(V15)%>%
+  summarise(county=first(V2),vote=sum(V19), .groups="keep")
+
+
+```
+

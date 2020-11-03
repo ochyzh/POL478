@@ -67,6 +67,15 @@ Homework assignments are made available at the end of class and are due the foll
           </dl>
         </td>
        </tr>
+       <tr>
+        <td>Nov 16</td>
+        <td>
+          <dl>
+          <dd><a href="../materials/homeworks/homework07.html" target=_blank>Homework 7</a> 
+          </dd>
+          </dl>
+        </td>
+       </tr>
       </tbody>
   </table>
 </div>
