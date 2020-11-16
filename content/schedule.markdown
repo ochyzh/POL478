@@ -92,7 +92,7 @@ All the class materials will be posted/updated here.
         <td>Working with Dates and Time</td>
         <td>
           <dl>
-          <dd> <a href="../materials/09_dates.html" target=_blank> dates and time</a> |<a href="code/stat478-nov-16.R"target=_blank> Code in class </a> 
+          <dd> <a href="../materials/09_dates.html" target=_blank> dates and time</a> |<a href="../materials/scripts/week8_Rscript.R"target=_blank> Code in class </a> 
           </dd>
           </dl>
         </td>
