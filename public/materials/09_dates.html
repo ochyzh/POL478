@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>POL 478H1 F</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olga Chyzh [www.olgachyzh.com]" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# POL 478H1 F
+## Dates and Time
+### Olga Chyzh [www.olgachyzh.com]
+
+---
+
+
+
+
+
+
+## Package `lubridate`
+
+- Read, format, and recode time variables
+
+- Apply mathematical and other functions to time variables: e.g. add/subtract
+
+- Convert time, e.g. weeks to months
+
+---
+
+## Variables in `Date` Format 
+
+Update the `classdata` package and load the `covid_daily` dataset.
+
+
+```r
+library(tidyverse)
+library(magrittr)
+library(devtools)
+install_github("ochyzh/classdata")
+library(classdata)
+data("covid_daily")
+str(covid_daily)
+```
+
+```
+## tibble [526,323 x 9] (S3: tbl_df/tbl/data.frame)
+##  $ fips         : num [1:526323] 1001 1001 1001 1001 1001 ...
+##  $ county       : chr [1:526323] "Autauga County" "Autauga County" "Autauga County" "Autauga County" ...
+##  $ date         : chr [1:526323] "2020-04-07" "2020-04-08" "2020-04-09" "2020-04-10" ...
+##  $ state_name   : chr [1:526323] "Alabama" "Alabama" "Alabama" "Alabama" ...
+##  $ population   : num [1:526323] 55200 55200 55200 55200 55200 55200 55200 55200 55200 55200 ...
+##  $ confirmed    : num [1:526323] 12 12 15 17 19 19 19 23 24 26 ...
+##  $ new_confirmed: num [1:526323] 0 0 3 2 2 0 0 4 1 2 ...
+##  $ deaths       : num [1:526323] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ new_deaths   : num [1:526323] 1 0 0 0 0 0 0 0 0 0 ...
+```
+
+---
+
+## Format Converter Functions
+
+- Convert character-variables to date/time using `lubridate`'s converter functions:
+
+    - date: `ymd`, `mdy`, `dmy`, ...
+    - time: `hm`, `hms`, ...
+    - date and time: `ymd_hms`, `mdy_hm`, ...
+- Order of letters specifies how the strings are parsed.
+
+- Separators determined automatically.
+
+---
+## Examples
+
+.pull-left[
+
+```r
+library(lubridate)
+x&lt;-"16-11-2020"
+class(x)
+```
+
+```
+## [1] "character"
+```
+
+```r
+dmy(x)
+```
+
+```
+## [1] "2020-11-16"
+```
+
+```r
+class(dmy(x))
+```
+
+```
+## [1] "Date"
+```
+]
+
+.pull-right[
+
+```r
+y&lt;-"Last updated at 10:30 am"
+class(y)
+```
+
+```
+## [1] "character"
+```
+
+```r
+hm(y)
+```
+
+```
+## [1] "10H 30M 0S"
+```
+
+```r
+class(hm(y))
+```
+
+```
+## [1] "Period"
+## attr(,"package")
+## [1] "lubridate"
+```
+]
+---
+
+## Or Apply to Convert Character Strings in a Dataset
+
+
+```r
+class(covid_daily$date)
+```
+
+```
+## [1] "character"
+```
+
+```r
+covid_daily$date1&lt;-ymd(covid_daily$date)
+class(covid_daily$date1)
+```
+
+```
+## [1] "Date"
+```
+
+---
+## Managing Date Variables
+
+- Sumarise:
+
+```r
+summary(covid_daily$date)
+```
+
+```
+##    Length     Class      Mode 
+##    526323 character character
+```
+
+```r
+summary(covid_daily$date1)
+```
+
+```
+##         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+## "2020-02-29" "2020-06-18" "2020-08-14" "2020-08-08" "2020-10-02" "2020-11-14"
+```
+
+- Extract month, year, ... using `month`, `year`, `week`, `wday`, `yday`, `hour`, `minute`
+
+```r
+covid_daily$month&lt;-month(covid_daily$date1)
+covid_daily$wday&lt;-wday(covid_daily$date1, label=T)
+```
+---
+## Durations
+
+
+```r
+mdy("10-16-2020")-mdy("10-02-2020")
+```
+
+```
+## Time difference of 14 days
+```
+
+```r
+mdy("10-16-2020")-months(1)
+```
+
+```
+## [1] "2020-09-16"
+```
+
+```r
+mdy("10-16-2020")-weeks(3)
+```
+
+```
+## [1] "2020-09-25"
+```
+
+```r
+mdy("10-16-2020")-days(13)
+```
+
+```
+## [1] "2020-10-03"
+```
+
+---
+## Your Turn
+
+Use the daily Covid-19 data from the `classdata` package to plot the total cases in the US by month. Which months saw the highest spikes of cases? 
+
+
+---
+## 7 Day Rolling Average
+
+```r
+library(zoo)
+#Set theme options:
+theme_set(theme_grey() + theme(panel.background = element_rect(fill = NA, color = 'black'))+ theme(axis.text=element_text(size=10),
+					axis.title=element_text(size=12,face="bold")))
+p&lt;-covid_daily %&gt;% group_by(date1) %&gt;% summarise(sum_cases=sum(new_confirmed, na.rm=T), .groups="keep") %&gt;% ungroup() %&gt;% arrange(date1) %&gt;% mutate(mean_cases7=zoo::rollmean(sum_cases,k=7,fill = NA)/1000) %&gt;% ggplot(aes(x=date1,y=mean_cases7))+geom_line()+scale_y_continuous("Covid-19 Cases, Thousands")+scale_x_date("")
+
+p1&lt;-covid_daily %&gt;% group_by(date1) %&gt;% summarise(sum_deaths=sum(new_deaths, na.rm=T), .groups="keep") %&gt;% ungroup() %&gt;% arrange(date1) %&gt;% mutate(mean_deaths7=zoo::rollmean(sum_deaths,k=7,fill = NA)) %&gt;% ggplot(aes(x=date1,y=mean_deaths7))+geom_line()+scale_y_continuous("Covid-19 Deaths")+scale_x_date("")
+
+library(gridExtra)
+grid.arrange(p, p1, 
+             ncol = 1, nrow = 2)
+```
+---
+## 7 Day Rolling Average
+&lt;img src="09_dates_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+---
+## Days of the Week, Cases
+
+```r
+covid_daily  %&gt;%  mutate(wday=wday(date1, label=T)) %&gt;% group_by(wday) %&gt;% ggplot(aes(x=wday,weight=new_confirmed/1000))+geom_bar()+scale_y_continuous("Covid-19 Cases")
+```
+
+&lt;img src="09_dates_files/figure-html/unnamed-chunk-12-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+---
+## Your Turn
+
+Make a visualization to find out the day of the week with the most Covid-19 deaths.
+
+
+
+---
+
+## Use `sugrrants` to Visualize Temporal Data
+
+
+```r
+library(sugrrants)
+calendar_df&lt;-covid_daily %&gt;% group_by(date1) %&gt;% summarise(sum_cases=sum(new_confirmed, na.rm=T)/1000, .groups="keep") %&gt;% frame_calendar(x=1, y=1, date=date1,calendar="monthly", week_start=7)
+
+p&lt;-calendar_df %&gt;% ggplot(aes(x=.x,y=.y, group=date1)) + geom_tile(aes(fill = sum_cases), colour = "grey50") + geom_text(label=day(calendar_df$date1),size=3, nudge_x = .001, nudge_y=.02)+
+  scale_fill_continuous("Number of Cases, thousands",low="white", high="red")
+prettify(p, label=c("label"),label.padding = unit(0.2, "lines"))+
+    theme(legend.position="bottom")+ggtitle("Covid-19 Cases in the US, 2020")+theme(plot.title = element_text(hjust = 0.5))
+```
+---
+## Use `sugrrants` to Visualize Temporal Data
+
+&lt;img src="09_dates_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Your Turn
+
+Make a calendar visualization of Covid-19 deaths.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
