@@ -1,0 +1,92 @@
+---
+title: "homework8_solution"
+author: "Olga Chyzh"
+date: "11/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=F}
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(classdata)
+data(covid_daily)
+```
+
+```{r}
+covid_daily$date<-ymd(covid_daily$date)
+covid_daily %>% ggplot(aes(x=month(date, label=T),weight=new_deaths))+geom_bar()
+```
+
+```{r}
+covid_daily$wday<-wday(covid_daily$date, label=T)
+covid_daily %>% ggplot(aes(x=wday,weight=new_confirmed))+geom_bar()
+
+covid_daily %>% ggplot(aes(x=wday,weight=new_deaths))+geom_bar()
+```
+
+
+```{r}
+library(zoo)
+library(scales)
+library(gridExtra)
+
+johnson<-covid_daily %>% filter(state_name=="Iowa" & county=="Johnson County") %>% 
+  mutate(date=ymd(date)) %>%
+  arrange(date) %>%
+  mutate(mean7=zoo::rollmean(new_confirmed,k=7,fill=NA)) %>%
+  ggplot(aes(x=date, y=mean7))+geom_line() +
+  geom_vline(aes(xintercept=ymd("2020-08-24")), linetype=2,colour="red") +scale_x_date("", breaks=ymd("2020-08-24"), labels="U of I\n Classes Start")
+
+iowa<-covid_daily %>% filter(state_name=="Iowa") %>% 
+  mutate(date=ymd(date)) %>%
+  group_by(date) %>%
+  summarise(sum_cases=sum(new_confirmed), .groups="keep") %>%
+  ungroup() %>%
+  arrange(date) %>%
+  mutate(mean7=zoo::rollmean(sum_cases,k=7,fill=NA)) %>%
+  ggplot(aes(x=date, y=mean7))+geom_line() +
+  geom_vline(aes(xintercept=ymd("2020-08-24")), linetype=2,colour="red")
+
+us<-covid_daily  %>% 
+  mutate(date=ymd(date)) %>%
+  group_by(date) %>%
+  summarise(sum_cases=sum(new_confirmed, na.rm=T), .groups="keep") %>%
+  ungroup() %>%
+  arrange(date) %>%
+  mutate(mean7=zoo::rollmean(sum_cases,k=7,fill=NA)) %>%
+  ggplot(aes(x=date, y=mean7))+geom_line() +
+  geom_vline(aes(xintercept=ymd("2020-08-24")), linetype=2,colour="red")
+
+grid.arrange(johnson, iowa, us, ncol=1, nrow=3)
+  
+
+```
+
+
+```{r}
+
+defMat<-read.csv("https://raw.githubusercontent.com/ochyzh/POLS478/master/defmat1914.csv", header=T)\
+head(defMat)
+
+defMat<-defMat %>% arrange(name1, name2) %>%
+  pivot_wider(names_from=name2,values_from=ally)
+
+defMat<-defMat[,-1]
+
+library(igraph)
+mygraph<-graph_from_adjacency_matrix(as.matrix(defMat),
+                     weighted=NULL,mode="directed",
+                     diag=FALSE)
+
+mygraph<-delete.vertices(mygraph, which(degree(mygraph)==0))
+plot(mygraph, vertex.color="turquoise", vertex.size=15, edge.arrow.size=.2, vertex.label.cex=.6)
+
+```
+
+
+
