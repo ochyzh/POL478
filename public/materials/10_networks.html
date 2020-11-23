@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>POL 478H1 F</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olga Chyzh [www.olgachyzh.com]" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# POL 478H1 F
+## Intro to Network Analysis
+### Olga Chyzh [www.olgachyzh.com]
+
+---
+
+
+
+
+## Today's Class
+ **Network Analysis: an introduction**
+
+ 1. Definitions. What is network analysis?
+ 
+ 3. Network features and measurements 
+ 
+ 4. Collecting/managing network data
+ 
+ 5. Applications to Political Science
+ 
+ 6. Network Visualization
+---
+
+
+## What is a network (i.e., a graph)?
+
+A set of **nodes** and **relation(s)** defined on them
+
+&lt;img src="images/madmen.png" width="400px" style="display: block; margin: auto;" /&gt;
+---
+
+## Defining Network Features &amp; Measurements: What's a node?
+
+- A &lt;span style="color:DarkCyan"&gt;**node**&lt;/span&gt; can be defined as an entity that can form relations with other entities. 
+
+**Synonyms**: 
+
+- actor: from sociometry, common terminology in sociology and psychology
+- vertex: from graph theory (i.e., math), common terminology in mathematics and physics
+
+Term node is common in statistics and applied sciences outside of soc and psych.
+---
+## Examples of Nodes
+
+- Individuals (Mad Men characters, legislators, terrorists)
+
+- Families 
+
+- Organizations, Human Rights NGOs
+
+- Countries
+---
+## Defining Network Features &amp; Measurements: What's a relation? 
+
+- A &lt;span style="color:DarkCyan"&gt;**relation/tie**&lt;/span&gt; defines the existence of an attribute relating nodes. 
+
+**Synonyms**: 
+
+- link: common in computer science (e.g., huge lit on “Link Prediction”) and social sciences
+- edge: graph theoretic terminology common in physics and math, but also elsewhere
+
+**Ties can have characteristics**: 
+
+- Weight
+- Qualitative attributes
+- Direction
+---
+## Exampesl of Ties
+
+- Romantic relationship, marriage, friendship
+
+- Business relationship
+
+- Cooperation/conflict
+---
+
+## Network graphs can reveal important structures
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/p1.png" alt=" " width="49%" height="10%" /&gt;&lt;img src="images/p2.png" alt=" " width="49%" height="10%" /&gt;
+&lt;p class="caption"&gt; &lt;/p&gt;
+&lt;/div&gt;
+---
+## Adolescent romantic and sexual networks  
+
+&lt;img src="images/jefferson.jpg" width="600px" style="display: block; margin: auto;" /&gt;
+**Bearman, Moody and Stovel**
+---
+## Adolescent Social Structure by **Jim Moody**
+&lt;img src="images/schoolGrade.png" width="600px" style="display: block; margin: auto;" /&gt;
+
+---
+## Adolescent Social Structure by **Jim Moody**
+&lt;img src="images/schoolRace.png" width="600px" style="display: block; margin: auto;" /&gt;
+---
+## Managing Network Data 
+You might begin with either a matrix or information stored separately about edges and nodes. This depends on your data collection strategy.
+
+Useful terminology for working in `\(R\)`:
+
+  + Matrices: the adjacency matrix
+  + Edges: linkages between actors or nodes
+  + Vertices: nodes (or actors) in your system 
+
+---
+## OExample: International Alliances 1914
+
+Download the data [here](https://raw.githubusercontent.com/ochyzh/POLS478/master/defmat1914.csv)  
+  - Countries are nodes
+  
+  - Alliances are ties
+
+
+
+
+```r
+defMat&lt;-read.csv("https://raw.githubusercontent.com/ochyzh/POLS478/master/defmat1914.csv" , header=T)
+head(defMat)
+```
+
+```
+##   name1 name2 ally
+## 1   AUH   GUA    0
+## 2   AUH   HON    0
+## 3   AUH   SAL    0
+## 4   AUH   NIC    0
+## 5   AUH   ECU    0
+## 6   AUH   UKG    0
+```
+
+
+---
+## Your Turn (5 min)
+
+Can you transform `defAlly` into a matrix form as shown below?
+
+
+
+
+
+```r
+as.matrix(defMat)[1:20,1:20]
+```
+
+```
+##       AUH BOL BUL COS ECU FRN GMY GRC GUA HON ITA JPN MNG NIC POR ROM RUS SAL
+##  [1,]  NA   0   1   0   0   0   1   0   0   0   1   0   0   0   0   1   0   0
+##  [2,]   0  NA   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##  [3,]   1   0  NA   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+##  [4,]   0   0   0  NA   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##  [5,]   0   0   0   0  NA   0   0   0   0   0   0   0   0   0   0   0   0   0
+##  [6,]   0   0   0   0   0  NA   0   0   0   0   0   0   0   0   0   0   1   0
+##  [7,]   1   0   1   0   0   0  NA   0   0   0   1   0   0   0   0   1   0   0
+##  [8,]   0   0   0   0   0   0   0  NA   0   0   0   0   0   0   0   0   0   0
+##  [9,]   0   0   0   0   0   0   0   0  NA   0   0   0   0   0   0   0   0   0
+## [10,]   0   0   0   0   0   0   0   0   0  NA   0   0   0   0   0   0   0   0
+## [11,]   1   0   0   0   0   0   1   0   0   0  NA   0   0   0   0   0   0   0
+## [12,]   0   0   0   0   0   0   0   0   0   0   0  NA   0   0   0   0   0   0
+## [13,]   0   0   0   0   0   0   0   0   0   0   0   0  NA   0   0   0   0   0
+## [14,]   0   0   0   0   0   0   0   0   0   0   0   0   0  NA   0   0   0   0
+## [15,]   0   0   0   0   0   0   0   0   0   0   0   0   0   0  NA   0   0   0
+## [16,]   1   0   0   0   0   0   1   0   0   0   0   0   0   0   0  NA   1   0
+## [17,]   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   1  NA   0
+## [18,]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  NA
+## [19,]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## [20,]   0   0   1   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+##       SPN TUR
+##  [1,]   0   0
+##  [2,]   0   0
+##  [3,]   0   1
+##  [4,]   0   0
+##  [5,]   0   0
+##  [6,]   0   0
+##  [7,]   0   1
+##  [8,]   0   0
+##  [9,]   0   0
+## [10,]   0   0
+## [11,]   0   0
+## [12,]   0   0
+## [13,]   0   0
+## [14,]   0   0
+## [15,]   0   0
+## [16,]   0   0
+## [17,]   0   0
+## [18,]   0   0
+## [19,]  NA   0
+## [20,]   0  NA
+```
+
+
+
+---
+
+## Make a Network Graph
+
+
+```r
+library(igraph)
+pGraph &lt;- graph_from_adjacency_matrix(as.matrix(defMat), weighted=NULL, mode="undirected", 
+                                      diag=FALSE) #convert to an igraph object
+pGraph &lt;- delete.vertices(pGraph , which(degree(pGraph)==0)) #remove isolates
+V(pGraph)$color &lt;- "turquoise"
+AllyPlot&lt;- plot(pGraph, 
+     edge.arrow.size=.2, 
+     edge.color="black",
+     vertex.frame.color="black",
+     vertex.label=V(pGraph)$names, 
+     vertex.label.color="black", layout=layout_with_fr,
+     edge.width=E(pGraph)$weight/5, edge.curved=.08, vertex.size=30)
+```
+
+
+---
+## Make a Network Graph
+
+&lt;img src="10_networks_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

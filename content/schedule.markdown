@@ -102,7 +102,7 @@ All the class materials will be posted/updated here.
         <td>Visualizing Network Data</td>
         <td>
           <dl>
-          <dd> <a href="../materials/09_networks.html" target=_blank> network data</a> |<a href="code/stat478-nov-23.R"target=_blank> Code in class </a> 
+          <dd> <a href="../materials/10_networks.html" target=_blank> network data</a> |<a href="code/stat478-nov-23.R"target=_blank> Code in class </a> 
           </dd>
           </dl>
         </td>
