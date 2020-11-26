@@ -94,6 +94,22 @@ Homework assignments are made available at the end of class and are due the foll
           </dl>
         </td>
        </tr>
+       <td>Dec 7 </td>
+        <td>
+          <dl>
+          <dd><a href="../materials/homeworks/homework10.html" target=_blank>Homework 10</a> 
+          </dd>
+          </dl>
+        </td>
+       </tr>
+       <td>Dec 7 </td>
+        <td>
+          <dl>
+          <dd><a href="../materials/homeworks/homework11_optional.html" target=_blank>Make-up Homework (optional)</a> 
+          </dd>
+          </dl>
+        </td>
+       </tr>
       </tbody>
   </table>
 </div>
