@@ -112,7 +112,7 @@ All the class materials will be posted/updated here.
         <td>Automated Data Collection</td>
         <td>
           <dl>
-          <dd> <a href="../materials/10_web_scraping.html" target=_blank> web scraping</a> |<a href="code/stat478-nov-30.R"target=_blank> code in class </a> 
+          <dd> <a href="../materials/11_webscraping.html" target=_blank> web scraping</a> |<a href="code/stat478-nov-30.R"target=_blank> code in class </a> 
           </dd>
           </dl>
         </td>
@@ -122,7 +122,7 @@ All the class materials will be posted/updated here.
         <td>Drawing Maps</td>
         <td>
           <dl>
-          <dd> <a href="../materials/11_maps.html" target=_blank> drawing maps</a> |<a href="code/stat478-dec-7.R"target=_blank> code in class </a> 
+          <dd> <a href="../materials/12_maps.html" target=_blank> drawing maps</a> |<a href="code/stat478-dec-7.R"target=_blank> code in class </a> 
           </dd>
           </dl>
         </td>

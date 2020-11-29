@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>POL 478H1 F</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olga Chyzh [www.olgachyzh.com]" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# POL 478H1 F
+## Intro to Webscraping
+### Olga Chyzh [www.olgachyzh.com]
+
+---
+
+
+
+
+
+
+
+## Outline
+
+- What is webscraping?
+
+- Webscraping using `rvest`
+
+- Examples
+
+    + IMDB show cast
+    
+    + 2020 US election returns
+    
+---
+
+## What is Webscraping?
+
+- Extract data from websites 
+
+    + Tables
+    
+    + Links to other websites
+    
+    + Text
+
+&lt;img src="./images/USHouse.png" width="100%" /&gt;
+
+---
+## Why Webscrape?
+
+- Because copy-paste is tedious
+
+- Because it's fast
+
+- Because you can automate it
+
+- Because it helps reduce/catch errors
+
+&lt;img src="./images/copypaste.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+## Webscraping: Broad Strokes
+
+- All websites are written in `HTML` (mostly)
+
+- `HTML` code is messy and difficult to parse manually
+
+- We will use R to 
+   - read the `HTML` (or other) code 
+   - clean it up to extract the data we need
+
+- Need only a very rudimentary understanding of `HTML`
+
+---
+## Webscraping with `rvest`: Step-by-Step Start Guide
+
+Install all tidyverse packages:
+
+```r
+# check if you already have it
+library(tidyverse)
+library(rvest)
+# if not:
+install.packages("tidyverse")
+library(tidyverse) # only calls the "core" of tidyverse
+```
+
+---
+
+## Step 1: What Website Are You Scraping?
+
+
+```r
+# character variable containing the url you want to scrape
+myurl &lt;- "https://www.imdb.com/title/tt0068646/"
+```
+
+---
+
+## Step 2: Read `HTML` into R
+
+- `HTML` is HyperText Markup Language. 
+
+- Go to any [website](https://www.imdb.com/title/tt0068646/), right click, click "View Page Source" to see the HTML 
+
+
+```r
+library(tidyverse)
+library(rvest)
+myhtml &lt;- read_html(myurl)
+myhtml
+```
+
+```
+## {html_document}
+## &lt;html xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml"&gt;
+## [1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
+## [2] &lt;body id="styleguide-v2" class="fixed"&gt;\n            &lt;img height="1" widt ...
+```
+---
+
+## Step 3: Where in the HTML Code Are Your Data?
+
+- Need to find your data within the `myhtml` object. 
+
+- In `HTML`, all objects, such as tables, paragraphs, hyperlinks, and headings, are inside "tags" that are surrounded by &lt;&gt; symbols
+
+- Examples of tags: 
+
+    - `&lt;p&gt;` This is a paragraph.`&lt;/p&gt;`
+    - `&lt;h1&gt;` This is a heading. `&lt;/h1&gt;`
+    - `&lt;a&gt;` This is a link. `&lt;/a&gt;`
+    - `&lt;li&gt;` item in a list `&lt;/li&gt;`
+    - `&lt;table&gt;`This is a table. `&lt;/table&gt;`
+
+- Can use [Selector Gadget](http://selectorgadget.com/) to find the exact location. Enter `vignette("selectorgadget")` for an overview. 
+
+- Can also skim through the raw html code looking for possible tags.
+
+- For more on HTML, check out the [W3schools' tutorial](http://www.w3schools.com/html/html_intro.asp) 
+
+- You don't need to be an expert in HTML to webscrape with `rvest`!
+
+---
+
+## Step 4: 
+
+Give HTML tags into html_nodes() to extract your data of interest. Once you got the content of what you are looking for, use html_text to extract text, html_table to get a table 
+
+
+```r
+mysummary&lt;-html_nodes(myhtml, "#titleCast") #Gets everything in the element
+mysummary
+```
+
+```
+## {xml_nodeset (1)}
+## [1] &lt;div class="article" id="titleCast"&gt;\n    &lt;span class="rightcornerlink"&gt;\ ...
+```
+
+```r
+html_text(mysummary) 
+```
+
+```
+## [1] "\n    \n            Edit\n    \n        Cast\n        \n        Cast overview, first billed only:\n          \n          \n Marlon Brando\n          \n          \n              ...\n          \n          \n            Don Vito Corleone \n                  \n          \n      \n          \n          \n Al Pacino\n          \n          \n              ...\n          \n          \n            Michael Corleone \n                  \n          \n      \n          \n          \n James Caan\n          \n          \n              ...\n          \n          \n            Sonny Corleone \n                  \n          \n      \n          \n          \n Richard S. Castellano\n          \n          \n              ...\n          \n          \n            Clemenza \n  \n  \n  (as Richard Castellano)\n  \n                  \n          \n      \n          \n          \n Robert Duvall\n          \n          \n              ...\n          \n          \n            Tom Hagen \n                  \n          \n      \n          \n          \n Sterling Hayden\n          \n          \n              ...\n          \n          \n            Capt. McCluskey \n                  \n          \n      \n          \n          \n John Marley\n          \n          \n              ...\n          \n          \n            Jack Woltz \n                  \n          \n      \n          \n          \n Richard Conte\n          \n          \n              ...\n          \n          \n            Barzini \n                  \n          \n      \n          \n          \n Al Lettieri\n          \n          \n              ...\n          \n          \n            Sollozzo \n                  \n          \n      \n          \n          \n Diane Keaton\n          \n          \n              ...\n          \n          \n            Kay Adams \n                  \n          \n      \n          \n          \n Abe Vigoda\n          \n          \n              ...\n          \n          \n            Tessio \n                  \n          \n      \n          \n          \n Talia Shire\n          \n          \n              ...\n          \n          \n            Connie \n                  \n          \n      \n          \n          \n Gianni Russo\n          \n          \n              ...\n          \n          \n            Carlo \n                  \n          \n      \n          \n          \n John Cazale\n          \n          \n              ...\n          \n          \n            Fredo \n                  \n          \n      \n          \n          \n Rudy Bond\n          \n          \n              ...\n          \n          \n            Cuneo \n                  \n          \n      \n            See full cast »\n        \n        \n    \n \nView production, box office, &amp; company info\n\n    \n        \n    "
+```
+
+```r
+#Or you can combine the operations into a pipe:
+myhtml %&gt;% html_nodes("#titleCast") %&gt;% html_text()
+```
+
+```
+## [1] "\n    \n            Edit\n    \n        Cast\n        \n        Cast overview, first billed only:\n          \n          \n Marlon Brando\n          \n          \n              ...\n          \n          \n            Don Vito Corleone \n                  \n          \n      \n          \n          \n Al Pacino\n          \n          \n              ...\n          \n          \n            Michael Corleone \n                  \n          \n      \n          \n          \n James Caan\n          \n          \n              ...\n          \n          \n            Sonny Corleone \n                  \n          \n      \n          \n          \n Richard S. Castellano\n          \n          \n              ...\n          \n          \n            Clemenza \n  \n  \n  (as Richard Castellano)\n  \n                  \n          \n      \n          \n          \n Robert Duvall\n          \n          \n              ...\n          \n          \n            Tom Hagen \n                  \n          \n      \n          \n          \n Sterling Hayden\n          \n          \n              ...\n          \n          \n            Capt. McCluskey \n                  \n          \n      \n          \n          \n John Marley\n          \n          \n              ...\n          \n          \n            Jack Woltz \n                  \n          \n      \n          \n          \n Richard Conte\n          \n          \n              ...\n          \n          \n            Barzini \n                  \n          \n      \n          \n          \n Al Lettieri\n          \n          \n              ...\n          \n          \n            Sollozzo \n                  \n          \n      \n          \n          \n Diane Keaton\n          \n          \n              ...\n          \n          \n            Kay Adams \n                  \n          \n      \n          \n          \n Abe Vigoda\n          \n          \n              ...\n          \n          \n            Tessio \n                  \n          \n      \n          \n          \n Talia Shire\n          \n          \n              ...\n          \n          \n            Connie \n                  \n          \n      \n          \n          \n Gianni Russo\n          \n          \n              ...\n          \n          \n            Carlo \n                  \n          \n      \n          \n          \n John Cazale\n          \n          \n              ...\n          \n          \n            Fredo \n                  \n          \n      \n          \n          \n Rudy Bond\n          \n          \n              ...\n          \n          \n            Cuneo \n                  \n          \n      \n            See full cast »\n        \n        \n    \n \nView production, box office, &amp; company info\n\n    \n        \n    "
+```
+
+---
+## Most Often, We Want to Extract a Table
+
+
+```r
+myhtml %&gt;% html_nodes("table") %&gt;% html_table(header = TRUE)
+```
+
+```
+## [[1]]
+##    Cast overview, first billed only: Cast overview, first billed only:
+## 1                                 NA                     Marlon Brando
+## 2                                 NA                         Al Pacino
+## 3                                 NA                        James Caan
+## 4                                 NA             Richard S. Castellano
+## 5                                 NA                     Robert Duvall
+## 6                                 NA                   Sterling Hayden
+## 7                                 NA                       John Marley
+## 8                                 NA                     Richard Conte
+## 9                                 NA                       Al Lettieri
+## 10                                NA                      Diane Keaton
+## 11                                NA                        Abe Vigoda
+## 12                                NA                       Talia Shire
+## 13                                NA                      Gianni Russo
+## 14                                NA                       John Cazale
+## 15                                NA                         Rudy Bond
+##    Cast overview, first billed only:
+## 1                                ...
+## 2                                ...
+## 3                                ...
+## 4                                ...
+## 5                                ...
+## 6                                ...
+## 7                                ...
+## 8                                ...
+## 9                                ...
+## 10                               ...
+## 11                               ...
+## 12                               ...
+## 13                               ...
+## 14                               ...
+## 15                               ...
+##               Cast overview, first billed only:
+## 1                             Don Vito Corleone
+## 2                              Michael Corleone
+## 3                                Sonny Corleone
+## 4  Clemenza \n  \n  \n  (as Richard Castellano)
+## 5                                     Tom Hagen
+## 6                               Capt. McCluskey
+## 7                                    Jack Woltz
+## 8                                       Barzini
+## 9                                      Sollozzo
+## 10                                    Kay Adams
+## 11                                       Tessio
+## 12                                       Connie
+## 13                                        Carlo
+## 14                                        Fredo
+## 15                                        Cuneo
+```
+---
+## Step 5: Save and Clean the Data
+
+- You may want to remove all columns except Actor and Role.
+
+- Here is some sample code to clean this, but there are many ways to do the same:
+
+
+```r
+library(stringr)
+library(magrittr)
+mydat &lt;- myhtml %&gt;% 
+  html_nodes("table") %&gt;%
+  extract2(1) %&gt;% #our table is actually nested within a list element [[]]
+  html_table(header = TRUE)
+mydat &lt;- mydat[,c(2,4)]
+names(mydat) &lt;- c("Actor", "Role")
+mydat &lt;- mydat %&gt;% 
+  mutate(Actor = Actor,
+         Role = str_extract(Role,"[^\\n]+")) #anything but [^] one or more instances + of \n
+mydat
+```
+
+```
+##                    Actor              Role
+## 1          Marlon Brando Don Vito Corleone
+## 2              Al Pacino  Michael Corleone
+## 3             James Caan    Sonny Corleone
+## 4  Richard S. Castellano         Clemenza 
+## 5          Robert Duvall         Tom Hagen
+## 6        Sterling Hayden   Capt. McCluskey
+## 7            John Marley        Jack Woltz
+## 8          Richard Conte           Barzini
+## 9            Al Lettieri          Sollozzo
+## 10          Diane Keaton         Kay Adams
+## 11            Abe Vigoda            Tessio
+## 12           Talia Shire            Connie
+## 13          Gianni Russo             Carlo
+## 14           John Cazale             Fredo
+## 15             Rudy Bond             Cuneo
+```
+
+---
+## Your Turn (5 min)
+
+- Follow the same steps to get the cast of the Wizard of Oz movie.
+
+- Clean up the output the best you can. Feel free to consult the [`stringr` cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
+
+---
+
+## Why Is This Useful?
+
+- Can write a loop to get cast of a long list of movies
+
+- Can write a loop to get any tables from any website/websites
+
+
+---
+## Key Functions: `html_text`
+
+- `html_text(x)` extracts all text from the nodeset `x` 
+- Good for cleaning output
+
+
+```r
+read_html(myurl) %&gt;% 
+  html_nodes("p") %&gt;% # first get all the paragraphs 
+  html_nodes("a") %&gt;% # then get all the links in those paragraphs
+  html_text() # get the linked text only 
+
+myurl &lt;- "https://www.tripadvisor.ca/Attraction_Review-g155019-d155483-Reviews-CN_Tower-Toronto_Ontario.html"
+read_html(myurl) %&gt;% 
+  html_nodes(".cPQsENeY") %&gt;%
+  html_text()
+```
+
+---
+## Key Functions: `html_table` 
+
+- `html_table(x, header, fill)` - parse html table(s) from `x` into a data frame or list of data frames 
+- Structure of HTML makes finding and extracting tables easy!
+
+
+```r
+myurl&lt;-"https://electionresults.utah.gov/elections/countyCount/399789495"
+read_html(myurl) %&gt;% 
+  html_nodes("table") %&gt;% # get the tables 
+  html_table(header=F) %&gt;%
+  head() 
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
