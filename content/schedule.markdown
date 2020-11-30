@@ -112,7 +112,7 @@ All the class materials will be posted/updated here.
         <td>Automated Data Collection</td>
         <td>
           <dl>
-          <dd> <a href="../materials/11_webscraping.html" target=_blank> web scraping</a> |<a href="code/stat478-nov-30.R"target=_blank> code in class </a> 
+          <dd> <a href="../materials/11_webscraping.html" target=_blank> web scraping</a> |<a href="../materials/scripts/week10_Rscript.R"target=_blank> code in class </a> 
           </dd>
           </dl>
         </td>
