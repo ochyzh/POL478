@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>POL 478H1 F</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olga Chyzh [www.olgachyzh.com]" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# POL 478H1 F
+## Making Maps
+### Olga Chyzh [www.olgachyzh.com]
+
+---
+
+
+
+
+
+## Necessary `R` Packages
+
+```r
+library(ggplot2)
+library(tidyverse)
+library(magrittr)
+library(maps)
+library(mapdata)
+library(mapproj)
+library(classdata)
+
+library(devtools)
+install_github("mccormackandrew/mapcan", build_vignettes = TRUE)
+library(mapcan)
+```
+
+---
+## Map Data
+
+
+```r
+canada_map&lt;-mapcan(boundaries = "province", type="standard",territories=TRUE)
+head(canada_map)
+```
+
+```
+##      long     lat order  hole piece pr_sgc_code group                pr_english
+## 1 2278204 1261783     1 FALSE     1          10  10.1 Newfoundland and Labrador
+## 2 2294272 1251745     2 FALSE     1          10  10.1 Newfoundland and Labrador
+## 3 2300435 1250534     3 FALSE     1          10  10.1 Newfoundland and Labrador
+## 4 2306656 1243299     4 FALSE     1          10  10.1 Newfoundland and Labrador
+## 5 2315548 1241630     5 FALSE     1          10  10.1 Newfoundland and Labrador
+## 6 2313319 1237013     6 FALSE     1          10  10.1 Newfoundland and Labrador
+##                 pr_french pr_alpha
+## 1 Terre-Neuve-et-Labrador       NL
+## 2 Terre-Neuve-et-Labrador       NL
+## 3 Terre-Neuve-et-Labrador       NL
+## 4 Terre-Neuve-et-Labrador       NL
+## 5 Terre-Neuve-et-Labrador       NL
+## 6 Terre-Neuve-et-Labrador       NL
+```
+
+---
+
+## Map of Canada
+
+```r
+#Set theme options:
+theme_set(theme_grey() + theme(axis.text=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title.x=element_blank(),
+              axis.title.y=element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank(),
+		  legend.position="none"))
+
+ggplot(canada_map, aes(long, lat, group = group)) +
+  geom_polygon(color="black", fill="white")
+```
+
+---
+
+## Map of Canada
+&lt;img src="12_maps_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Map of the US
+
+
+```r
+us_counties&lt;-map_data("maps::county")
+ggplot(us_counties, aes(long, lat, group = group)) +
+  geom_polygon(color="black", fill="white") 
+
+us_states&lt;-map_data("state")
+ggplot(us_counties, aes(long, lat, group = group)) +
+  geom_polygon(color="grey", fill="white") +  geom_path(data=us_states, aes(long, lat, group = group),color="black", size=1)+ coord_map("albers",lat0=39, lat1=45)
+```
+
+---
+
+## Map of the US
+&lt;img src="12_maps_files/figure-html/unnamed-chunk-6-1.png" width="150%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Map of the US
+&lt;img src="12_maps_files/figure-html/unnamed-chunk-7-1.png" width="150%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Choropleth Maps
+
+- Choropleth maps are thematic maps: areas are shaded by the values of a variable
+
+- Must join map data with content data.
+
+- Example: a map of US counties that shows the number of Covid-19 cases. 
+   
+---
+
+## Join Data on Covid and Map
+
+
+
+```
+## # A tibble: 6 x 16
+##    FIPS state state_name county month clinton2016 trump2016 tot_votes2016
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1  1001 AL    Alabama    autau~     4        5908     18110         24661
+## 2  1001 AL    Alabama    autau~     5        5908     18110         24661
+## 3  1001 AL    Alabama    autau~     6        5908     18110         24661
+## 4  1001 AL    Alabama    autau~     7        5908     18110         24661
+## 5  1001 AL    Alabama    autau~     8        5908     18110         24661
+## 6  1001 AL    Alabama    autau~     9        5908     18110         24661
+## # ... with 8 more variables: trumpmarg &lt;dbl&gt;, medinc1317 &lt;dbl&gt;, urb2010 &lt;dbl&gt;,
+## #   population &lt;dbl&gt;, confirmed &lt;dbl&gt;, new_confirmed &lt;dbl&gt;, deaths &lt;dbl&gt;,
+## #   new_deaths &lt;dbl&gt;
+```
+
+
+```
+##        long      lat group order  region subregion
+## 1 -86.50517 32.34920     1     1 alabama   autauga
+## 2 -86.53382 32.35493     1     2 alabama   autauga
+## 3 -86.54527 32.36639     1     3 alabama   autauga
+## 4 -86.55673 32.37785     1     4 alabama   autauga
+## 5 -86.57966 32.38357     1     5 alabama   autauga
+## 6 -86.59111 32.37785     1     6 alabama   autauga
+```
+
+---
+## Prepare the Datasets for Joining
+
+- Will be joining by *state name* and *county name*
+
+- Must make sure that these are formatted the same in both datasets, e.g. capitalization, the word "county"
+
+- Will introduce a new variable `state_name` that is all lower case
+
+- Can see mismatching cases using `anti_join`
+
+- Also, since a map can only show one temporal period, need to aggregate the `covid` data to the county level (get rid of the temporal dimension)
+
+
+---
+## Prepare the Datasets for Joining
+
+
+```r
+library(stringr)
+covid_data &lt;-covid %&gt;% filter(month==10) %&gt;% 
+  select(-new_confirmed, -new_deaths) %&gt;% 
+  mutate(state_name=tolower(state_name), county=str_replace(county, "county",""), county=trimws(county)) 
+
+nomatch1 &lt;- covid_data %&gt;%
+  anti_join(us_counties, by=c("state_name"="region", "county"="subregion"))
+unique(cbind(nomatch1$state_name,nomatch1$county))
+
+
+nomatch2 &lt;- us_counties %&gt;%
+  anti_join(covid_data, by=c("region"="state_name", "subregion"="county"))
+unique(cbind(nomatch2$region,nomatch2$subregion))
+```
+
+---
+## Join the Data and Make Map
+
+
+```r
+library(viridis)
+us_counties %&gt;% left_join(covid_data, by=c("region"="state_name", "subregion"="county")) %&gt;%
+ggplot(aes(long, lat, group = group, fill=log10(confirmed/population))) +
+  geom_polygon(color="black") + scale_fill_viridis(na.value="white")+ coord_map("albers",lat0=39, lat1=45)
+```
+
+&lt;img src="12_maps_files/figure-html/unnamed-chunk-11-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Your Turn
+
+Correct as many "gray" counties as you can. Feel free to consult the [`stringr` cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
+
+
+&lt;img src="12_maps_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
